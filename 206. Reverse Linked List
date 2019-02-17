@@ -31,7 +31,7 @@ class Solution:
     #     else:
     #         return pre
         
-    # sol3, better recursive from solution
+    # sol3, better recursive from solution, O(n) and O(n)
     def reverseList(self, head: 'ListNode') -> 'ListNode':
         if(head == None or head.next == None):return head
         p = self.reverseList(head.next)
