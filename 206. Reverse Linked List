@@ -1,0 +1,40 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    # sol1, my iteratively:
+    # time O(n), space O(1)
+    # def reverseList(self, head: 'ListNode') -> 'ListNode':
+    #     pre = None
+    #     cur = head
+    #     if head:
+    #         nex = head.next
+    #     while cur != None:
+    #         cur.next = pre
+    #         pre = cur
+    #         cur = nex
+    #         if nex:
+    #             nex = nex.next            
+    #     return pre
+    
+    # sol2, my recursively
+    # def reverseList(self, head: 'ListNode') -> 'ListNode':
+    #     return self.revhelpler(head, None)
+    # def revhelpler(self, head, pre):
+    #     if head:
+    #         nex = head.next
+    #         head.next = pre
+    #         return self.revhelpler(nex, head)
+    #     else:
+    #         return pre
+        
+    # sol3, better recursive from solution
+    def reverseList(self, head: 'ListNode') -> 'ListNode':
+        if(head == None or head.next == None):return head
+        p = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return p
