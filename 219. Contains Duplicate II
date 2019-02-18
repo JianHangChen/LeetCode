@@ -1,0 +1,24 @@
+class Solution:
+    # sol1, my dict
+#     def containsNearbyDuplicate(self, nums: 'List[int]', k: 'int') -> 'bool':
+#         dic = {}
+        
+#         for i in range(len(nums)):
+#             if nums[i] in dic.keys():
+#                 if i-dic[nums[i]] <= k:
+#                     return True
+#                 else:
+#                     dic[nums[i]] = i
+#             else:
+#                 dic[nums[i]] = i
+#         return False
+    
+    # sol1.1, a little bit small revise using enumerate
+    # https://leetcode.com/problems/contains-duplicate-ii/discuss/61631/Only-one-test-per-element-%3A-)    
+    def containsNearbyDuplicate(self, nums: 'List[int]', k: 'int') -> 'bool':
+        dic = {}
+        for i, v in enumerate(nums):
+            if v in dic.keys() and i - dic.get(v) <= k:
+                return True
+            dic[v] = i
+        return False
