@@ -1,0 +1,24 @@
+class Solution:
+
+    # sol1, my using len set
+    # def containsDuplicate(self, nums: 'List[int]') -> 'bool':
+    #     return len(nums) != len(set(nums))
+    
+    # sol2, using set, O(n) space: O(n)
+    # def containsDuplicate(self, nums: 'List[int]') -> 'bool':
+    #     appear = set()
+    #     for i in nums:
+    #         if i in appear:
+    #             return True
+    #         else:
+    #             appear.add(i)
+    #     return False
+    
+    # sol3, from sol, using sort
+    # nlog(n), space O(1)
+    def containsDuplicate(self, nums: 'List[int]') -> 'bool':
+        dnums = sorted(nums)
+        for i in range(len(nums)-1):
+            if dnums[i] == dnums[i+1]:
+                return True
+        return False
