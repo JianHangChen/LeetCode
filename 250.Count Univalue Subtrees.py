@@ -2,7 +2,6 @@
 # lintcode: 921.Count Univalue Subtrees
 
 
-
 """
 Definition of TreeNode:
 class TreeNode:
@@ -17,6 +16,31 @@ class Solution:
     @return: the number of uni-value subtrees.
     """
     # sol1.1 from https://www.geeksforgeeks.org/find-count-of-singly-subtrees/
+    def countUnivalSubtrees(self, root):
+        self.count = 0
+        self.isUnival(root)
+        return self.count
+    def isUnival(self, root):
+        if root is None:
+            return True
+        
+        if !(self.isUnival(root.left) and self.isUnival(root.right)):
+            return False
+            
+        if root.left and root.right:
+            if root.val != root.left.val or root.val != root.right.val:
+                return False
+        
+        if root.left and !root.right:
+            if root.val != root.left.val:
+                return False
+        
+        if root.right and !root.left:
+            if root.val !=  root.right.val:
+                return False
+        
+        self.count += 1
+        return True
     
     # sol1, my recursive
     # def countUnivalSubtrees(self, root):
