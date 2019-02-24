@@ -1,7 +1,6 @@
 # leetcode: 250.Count Univalue Subtrees
 # lintcode: 921.Count Univalue Subtrees
 
-
 """
 Definition of TreeNode:
 class TreeNode:
@@ -15,34 +14,7 @@ class Solution:
     @param root: the given tree
     @return: the number of uni-value subtrees.
     """
-    # sol1.1 from https://www.geeksforgeeks.org/find-count-of-singly-subtrees/
-    def countUnivalSubtrees(self, root):
-        self.count = 0
-        self.isUnival(root)
-        return self.count
-    def isUnival(self, root):
-        if root is None:
-            return True
-        
-        if !(self.isUnival(root.left) and self.isUnival(root.right)):
-            return False
-            
-        if root.left and root.right:
-            if root.val != root.left.val or root.val != root.right.val:
-                return False
-        
-        if root.left and !root.right:
-            if root.val != root.left.val:
-                return False
-        
-        if root.right and !root.left:
-            if root.val !=  root.right.val:
-                return False
-        
-        self.count += 1
-        return True
-    
-    # sol1, my recursive
+  # sol1, my recursive
     # def countUnivalSubtrees(self, root):
     #     return self.helpler(root)[0]
     # def helpler(self, root):
@@ -74,3 +46,30 @@ class Solution:
     #             isUnival = True
     #     return (count,isUnival)
     
+    # sol1.1 from https://www.geeksforgeeks.org/find-count-of-singly-subtrees/
+    
+    def countUnivalSubtrees(self, root):
+        self.count = 0
+        self.isUnival(root)
+        return self.count
+        
+    def isUnival(self, root):
+        if root is None:
+            return True
+        isLeft = self.isUnival(root.left)
+        isRight = self.isUnival(root.right)
+        if (isLeft == False) or (isRight == False):
+            return False
+        if root.left and root.right:
+            if root.val != root.left.val or root.val != root.right.val:
+                return False
+        
+        if root.left and root.right == None:
+            if root.val != root.left.val:
+                return False
+        
+        if root.right and root.left == None:
+            if root.val !=  root.right.val:
+                return False
+        self.count += 1
+        return True
