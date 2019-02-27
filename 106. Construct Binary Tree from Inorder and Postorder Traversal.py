@@ -26,21 +26,34 @@ class Solution:
       
     # sol2, using map to avoid recursively list search
     # from https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/discuss/221681/Don't-use-top-voted-Python-solution-for-interview-here-is-why
-    def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
-        # map inorder list
-        self.inorderMap = {}
-        for idx, val in enumerate(inorder):
-            self.inorderMap[val] = idx
+#     def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
+#         # map inorder list
+#         self.inorderMap = {}
+#         for idx, val in enumerate(inorder):
+#             self.inorderMap[val] = idx
             
-        self.inorder = inorder
-        self.postorder = postorder
-        return self.findTree(0, len(inorder)-1)
+#         self.inorder = inorder
+#         self.postorder = postorder
+#         return self.findTree(0, len(inorder)-1)
         
-    def findTree(self, low: int, high: int) -> TreeNode:
-        if low > high:
-            return None
-        root = TreeNode( self.postorder.pop() )
-        rootInorderIdx = self.inorderMap[root.val]
-        root.right = self.findTree(rootInorderIdx+1, high)
-        root.left = self.findTree(low, rootInorderIdx-1)
-        return root
+#     def findTree(self, low: int, high: int) -> TreeNode:
+#         if low > high:
+#             return None
+#         root = TreeNode( self.postorder.pop() )
+#         rootInorderIdx = self.inorderMap[root.val]
+#         root.right = self.findTree(rootInorderIdx+1, high)
+#         root.left = self.findTree(low, rootInorderIdx-1)
+        # return root
+    
+    # sol3, my recursively without using map enlightened by pochman
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
+        def build(stop: int) ->TreeNode:
+            if inorder and inorder[-1] != stop:
+                root = TreeNode( postorder.pop() )
+                root.right = build(root.val)
+                inorder.pop()
+                root.left = build(stop)
+                
+                return root
+            
+        return build(None)
