@@ -118,7 +118,6 @@ class Solution:
         heapq.heapify(ugly)
         
         visited = set(ugly)
-        2,3,5
         for i in range(n):
             cur = heapq.heappop(ugly)
             for factor in [2,3,5]:
@@ -127,6 +126,22 @@ class Solution:
                     visited.add(candidate)
                     heapq.heappush(ugly, candidate)
         return cur
+    
+# # sol6, only use priority queue
+    import heapq
+    def nthUglyNumber(self, n):
+        ugly = [(1,1)]
+        
+        
+        for i in range(n):
+            cur, max_factor = heapq.heappop(ugly)
+            for factor in [2,3,5]:
+                if factor >= max_factor:
+                    heapq.heappush(ugly, (factor*cur, factor))
+        return cur
+        
+        
+        
 
                     
         
