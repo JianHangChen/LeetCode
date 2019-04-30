@@ -1,0 +1,44 @@
+class Solution:
+    # sol1, O(n) no need to use stack
+    def dailyTemperatures(self, T: List[int]) -> List[int]:
+        l = len(T)
+        res = [0] * l
+        for i in range(l - 1, -1, -1):
+            j = i + 1
+            while j <= l - 1:
+                if T[i] < T[j]:
+                    res[i] = j - i
+                    break
+                else:
+                    if res[j] == 0:
+                        break
+                    j = j + res[j]
+        return res        
+    
+    # sol2, next array, O(NW), here W = 102-31=71
+    # from sol1 in answer
+    
+    def dailyTemperatures(self, T: List[int]) -> List[int]:
+        n = len(T)
+        ans = [0] * n
+        nxt = [sys.maxsize]*72
+        for i in range(n - 1, -1, -1):
+            
+            idx = min(nxt[j-30] for j in range(T[i]+1, 102))
+            if idx != sys.maxsize:
+                ans[i] = idx - i
+            nxt[T[i] - 30] = i
+        
+        return ans
+    
+    # sol3, stack O(n), O(W)
+    def dailyTemperatures(self, T: List[int]) -> List[int]:
+        l = len(T)
+        res = [0] * l
+        stack = []
+        for i in range(l):
+            while stack and T[i] > T[stack[-1]]:
+                cur = stack.pop()
+                res[cur] = i - cur
+            stack.append(i)
+        return res
