@@ -1,3 +1,84 @@
+class Solution {
+public:
+    
+    sol1, my
+    int evalRPN(vector<string>& tokens) {
+        stack<int> s;
+        
+        for(string token : tokens){
+            if (token == "+"){
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                s.push(a+b);
+            }
+            else if (token == "-"){
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                s.push(a-b);
+            }
+            else if (token == "*"){
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                s.push(a*b);
+            }
+            else if (token == "/"){
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                s.push(a/b);
+            }
+            else{
+                
+                s.push( stoi(token) );
+                
+//                 int start = 0, num = 0;
+//                 int n = token.size();
+//                 bool negative = false;
+//                 if (token[0] == '-'){
+//                     start = 1;
+//                     negative = true;
+//                 }
+//                 while ( start < n){
+//                     num = num*10+(token[start] - '0');
+//                     start++;
+//                 }
+                
+//                 if(negative){
+//                     num = -num;
+//                 }
+                
+//                 s.push(num);
+            }
+            
+        }
+        return s.top();
+    }
+    
+    // sol2, use lambda expression
+    unordered_map<string, function<int (int, int)> > map = {
+        { "+", [](int a , int b){ return a + b;} },
+        { "-", [](int a , int b){ return a - b;} },
+        { "*", [](int a, int b){ return a * b;}},
+        { "/", [](int a, int b){ return a / b;}}
+    };
+    
+    int evalRPN(vector<string>& tokens) {
+        stack<int> s;
+        for(string& token: tokens){
+            if(map.count(token) == 0){
+                s.push( stoi(token) );
+            }
+            else{
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                s.push( map[token](a, b) );
+            }
+        }
+        return s.top();
+    }
+};
+
+
+
 class Solution:
     # sol1
     def evalRPN(self, tokens: List[str]) -> int:
