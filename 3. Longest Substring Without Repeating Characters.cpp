@@ -1,0 +1,52 @@
+class Solution {
+public:
+    
+    // sol1, my, two pointer, O(n), O(1), but this O(n) is slower
+//     int lengthOfLongestSubstring(string s) {
+//           	int i=0, j=0;
+//     	int n = s.size();
+//     	int max_l = 0;
+//     	int d;
+//     	while(j < n){
+
+//     		for(d = i ; d < j; d++){
+//     			if(s[d] == s[j]){
+//     				i = d+1;
+//     				break;
+//     			}
+//     		} 
+//     		if (d == j){
+// 				max_l = max(max_l, j - i + 1);
+//     		}
+//     		j++;
+//         }
+//         return max_l;
+  
+//     }
+    
+    //sol2, index storage
+    int lengthOfLongestSubstring(string s) {
+        int n = s.size();
+    	int max_l = 0;
+    	int cur_start = -1;
+    	int i = 0;
+        int cur_len = 0;
+
+    	int a[256];
+    	memset( a, -1, sizeof(a) );
+        
+    	while(i < n){
+            if(a[s[i]] > cur_start){
+                cur_start = a[s[i]];
+            }
+    		cur_len = i - cur_start;
+            a[s[i]] = i;
+            
+
+    		max_l = max(max_l, cur_len);
+    		i++;
+    	}
+    	return max_l;  
+    }
+
+};
