@@ -44,44 +44,6 @@ public:
     }
 };
 
-
-// class Solution {
-// public:
-//     /**
-//      * @param k an integer
-//      * @return all amicable pairs
-//      */
-//     vector<vector<int>> amicablePair(int k) {
-//         vector<vector<int>> result;
-//         for (int i = 1; i <= k; i++) {
-//             int amicable = factorSum(i);
-//             if (amicable <= i || amicable > k) {
-//                 continue;
-//             }
-//             if (factorSum(amicable) == i) {
-//                 vector<int> pair;
-//                 pair.push_back(i);
-//                 pair.push_back(amicable);
-//                 result.push_back(pair);
-//             }
-//         }
-        
-//         return result;
-//     }
-    
-//     int factorSum(int n) {
-//         int i, sum = 1;
-//         for (i = 2; i * i < n; i++) {
-//             if (n % i == 0) {
-//                 sum += i + n / i;
-//             }
-//         }
-//         if (i * i == n) {
-//             sum += i;
-//         }
-//         return sum;
-//     }
-// };
 int main() 
 { 
     Solution s;
