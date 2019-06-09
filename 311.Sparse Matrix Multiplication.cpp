@@ -33,7 +33,6 @@
         if(q == 0) return {{}};
         
         vector<vector<int>> res(m, vector<int> (q,0));
-        
         vector< vector< pair<int, int> > > non_zero_A(m);
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
@@ -42,7 +41,6 @@
                 }
             }
         }
-        
         int col, val;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < non_zero_A[i].size(); j++){
