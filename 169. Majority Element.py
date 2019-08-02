@@ -1,3 +1,32 @@
+//boyer-moore voting algorithm
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+ 
+
+        int count = 0, cur = -1;
+
+        for(int i = 0; i < nums.size(); i++){
+          if(count == 0){
+            cur = nums[i];
+            count++;
+          }
+          else{
+            if(cur == nums[i]){
+              count++;
+            }
+            else{
+              count--;
+            }
+          }
+        }
+
+        return cur;
+
+    }
+};
+
+
 def majorityElement(self, nums):
 
     #!!!!!!!! sol1 hash, O(n), O(n)
