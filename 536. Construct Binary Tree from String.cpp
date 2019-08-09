@@ -1,5 +1,3 @@
-
-
 // sol1, !!!recursively, from grandyang sol1
 class Solution {
 public:
@@ -42,10 +40,10 @@ public:
       TreeNode* root;
       int i = 0;
       while(i < s.size()){
-        if(s[i] >= '0' && s[i] <= '9' || s[i] == '-'){
+        if(isdigit(s[i]) || s[i] == '-'){
           int j = i;
 
-          while(i < s.size() && s[i] >= '0' && s[i] <= '9' || s[i] == '-') i++;
+          while(i < s.size() && isdigit(s[i]) || s[i] == '-') i++;
 
           TreeNode* cur = new TreeNode(stoi( s.substr(j, i - j)));
           if(!st.empty()){
