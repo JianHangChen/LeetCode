@@ -1,0 +1,38 @@
+class Solution {
+public:
+    /*
+     * @param string: An array of Char
+     * @param length: The true length of the string
+     * @return: The true length of new string
+     */
+    int replaceBlank(char string[], int length) {
+        int newlength = length;
+
+
+        for(int i = 0; i < length; i++){
+          if(string[i] == ' ') newlength += 2;
+        }
+
+        
+        int i = newlength - 1;
+        int j = length - 1;
+
+
+
+        while(j >= 0){
+          if(string[j] != ' '){
+            string[i] = string[j];
+            j--; i--;
+          }
+          else{
+            string[i] = '0';
+            string[i-1] = '2';
+            string[i-2] = '%';
+            i -= 3; j--;
+          }
+        }
+
+        return newlength;
+
+    }
+};
