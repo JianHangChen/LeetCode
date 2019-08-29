@@ -1,3 +1,28 @@
+// sol3, !!! linear scan from grand yang, fix the last, also very good O(n^2), O(logn)
+
+class Solution{
+public:
+  int triangleNumber(vector<int>& nums){
+    int count = 0, n = nums.size();
+    sort(nums.begin(), nums.end());
+
+    for(int i = n - 1; i >= 2; i--){
+      int left = 0, right = i - 1;
+      while(left < right){
+        if(nums[left] + nums[right] > nums[i]){
+          count += right - left;
+          right--;
+        }
+        else{
+          left++;
+        }
+      }
+    }
+    return count;
+  }
+};
+
+
 
 // sol2, !!!! linear scan, from sol3 O(n^2), O(logn)
 
@@ -22,6 +47,9 @@ public:
 
 
 
+
+
+
 // my sol1, O(n^2logn), O(logn) [sort]
 
 class Solution {
@@ -42,3 +70,4 @@ public:
         return count;
     }
 };
+
