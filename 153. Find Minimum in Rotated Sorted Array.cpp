@@ -1,3 +1,53 @@
+//!!! sol1, my
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int length = nums.size();
+        int l = 0, h = length - 1, mid;
+        
+        while(l < h){
+            mid = l + (h - l) / 2;
+            if(nums[mid] > nums[h]){
+                l = mid + 1;
+            }
+            else{
+                h = mid;
+            }
+            
+        }
+        
+        return nums[l];
+        
+        
+    }
+};
+
+
+// sol2, divide and conquer, from gy2
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int length = nums.size();        
+        
+        return getMin(nums, 0, length - 1);
+    }
+    
+    int getMin(vector<int>& nums, int start, int end){
+        if(nums[start] <= nums[end]) return nums[start];
+        
+        int mid = start + (end - start) / 2;
+        return min(getMin(nums, start, mid), getMin(nums, mid+1, end));
+        
+    }
+    
+};
+
+
+
+
+
+
+
 class Solution:
     # sol1, my binary search
 #     def findMin(self, nums: List[int]) -> int:
