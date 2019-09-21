@@ -1,3 +1,73 @@
+
+
+// !!!!!!! sol4, O(ln), O(l)
+class Solution{
+public:
+    int findTargetSumWays(vector<int>& nums, int S){
+        unordered_map<int, int> m1;
+        m1[0] = 1;
+        int n = nums.size();
+        for(int i = 0; i < n; i++){
+            unordered_map<int, int> m2;
+            for(auto m:m1){
+                int sum = m.first, count = m.second;
+                m2[sum + nums[i]] += count;
+                m2[sum - nums[i]] += count;
+            }
+            m1 = m2;
+        }
+        return m1[S];        
+    }
+};
+
+// !!! sol3, dp, O(ln), O(ln)
+// class Solution {
+// public:
+//     int findTargetSumWays(vector<int>& nums, int S){
+//         int n = nums.size();
+//         vector<unordered_map<int, int>> dp(n + 1);
+//         dp[0][0] = 1;
+        
+//         for(int i = 1; i <= n; i++){
+//             for(auto m:dp[i-1]){
+//                 int sum = m.first, count = m.second;
+//                 dp[i][sum + nums[i-1]] += count;
+//                 dp[i][sum - nums[i-1]] += count;
+//             }
+//         }
+//         return dp[n][S];        
+//     }
+// };
+
+
+// my sol2, memorization, O(ln), O(ln), l is the max value of sum, n is the array size
+
+// class Solution {
+// private:
+//   unordered_map<string, int> m;
+// public:
+//     int findTargetSumWays(vector<int>& nums, int S) {
+//       return helpler(nums, 0, 0, S);  
+//     }
+
+//     int helpler(std::vector<int> nums, int i, int pre_sum, int S){
+
+//       string key = to_string(i)+','+ to_string(pre_sum);
+//       if(m.count(key)) return m[key];
+
+//       int count = 0;
+//       if(i == nums.size()){
+//         if(pre_sum == S) count = 1;
+//       }
+//       else count = helpler(nums, i + 1, pre_sum + nums[i], S) + helpler(nums, i + 1, pre_sum - nums[i], S);
+
+//       m[key] = count;
+//       return count;
+
+//     }
+// };
+
+
 class Solution:
     # sol1, memorization
     # O(l*n), O(l*n), 472ms
