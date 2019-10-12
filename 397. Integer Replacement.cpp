@@ -1,4 +1,14 @@
-
+// sol3, math
+class Solution {
+public:
+    int integerReplacement(int n) {
+        if(n == 1) return 0;
+        if(n % 2 == 0) return 1 + integerReplacement(n / 2);
+        if(n == 3) return 2;
+        if(n % 4 == 3) return 2 + integerReplacement( n/2 + 1 ) ;
+        else return 2 + integerReplacement(n / 2);
+    }
+};
 
 
 //!!! sol2, 9 chapter dfs with memory
@@ -18,8 +28,8 @@ public:
 };
 
 
-// sol1, gy, recursively
-//  dfs without memory
+// // sol1, gy, recursively
+// //  dfs without memory
 class Solution {
 public:
     int integerReplacement(int n) {
