@@ -39,7 +39,7 @@ public:
 };
 
 
-//!!! sol3, divide and conquer from gy3
+//sol3, divide and conquer from gy3, O(n^2)
 class Solution{
 public:
     bool verifyPreorder(vector<int>& preorder){
