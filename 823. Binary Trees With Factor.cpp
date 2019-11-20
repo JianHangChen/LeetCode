@@ -1,5 +1,5 @@
 
-// sol2, dp, hint by gy
+// !!! sol2, dp, hint by gy
 class Solution{
 public:
 	int numFactoredBinaryTrees(vector<int> &A){
@@ -37,7 +37,7 @@ public:
         return res % P;
     }
 
-    int check(int num, vector<int> &A, unordered_set<int>& s){
+    long long check(int num, vector<int> &A, unordered_set<int>& s){
     	if(ck.count(num) > 0) return ck[num];
     	long long res = 1;
     	if(num <= 1) return 0;
@@ -46,7 +46,7 @@ public:
     			res += check(a, A,s)  * check(num / a, A,s); // multiply!! instead of add!
     		}
     	}
-    	int ans = res % P;
+    	long long ans = res % P;
     	ck[num] = ans;
   
     	return ans;
