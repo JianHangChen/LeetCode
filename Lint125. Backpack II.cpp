@@ -2,7 +2,7 @@
 class Solution {
 public:
     int backPackII(int m, vector<int> &A, vector<int> &V) {
-    	vector<int> dp(m+1, 0);
+    	vector<int> dp(m+1, 0); // dp[i] means when the size <= i (not exact =), the maximum value
     	int n = A.size();
     	for(int i = 0; i < n; i++){
     		for(int j = m; j >= A[i]; j--){
@@ -49,7 +49,7 @@ public:
     int backPackII(int m, vector<int> &A, vector<int> &V) {
     	int n = A.size();
     	if(n == 0) return 0;
-    	vector<vector<int>> dp(n, vector<int> (m + 1, 0));
+    	vector<vector<int>> dp(n, vector<int> (m + 1, 0)); // dp[i][j] means for (i+1) the element, the maximum value when the size is exactly = j
 	    dp[0][A[0]] = V[0];
 
     	for(int i = 1; i < n; i++){ // i means i-th (i+1) element
