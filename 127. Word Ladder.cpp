@@ -36,8 +36,8 @@ public:
 };
 
 
-//!!!!! sol1.1, gy2, bfs  cleverer, no need to use visited set
-// O(mN), O(mN), N is the length of wordList, m is the maximum word length
+//!!!!! sol1.1, gy2, bfs  cleverer, O(mN), O(N) no need to use visited set
+//  N is the length of wordList, m is the maximum word length
 // class Solution { 
 // public:
 //     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
