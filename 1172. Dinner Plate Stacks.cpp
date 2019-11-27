@@ -1,5 +1,34 @@
+// sol3, map+set, the same as sol2, but less code
+// from https://leetcode.com/problems/dinner-plate-stacks/discuss/366331/C%2B%2BPython-Two-Solutions
+class DinnerPlates{
+private:
+  int CAPACITY;
+  map<int, vector<int>> plates;
+  set<int> has_space;
+public:
+  DinnerPlates(int capacity){
+    CAPACITY = capacity;
+  }
+  void push(int val){
+    if(has_space.empty()) has_space.insert(plates.size());
+    int idx = *(has_space.begin());
+    plates[idx].push_back(val);
+    if(plates[idx].size() == CAPACITY) has_space.erase(idx); 
+  }
+  int pop(){
+    if(plates.empty()) return -1;
+    return popAtStack( (plates.rbegin())->first );
+  }
+  int popAtStack(int index){
+    if(plates.count(index) == 0 || plates[index].empty()) return -1;
+    if(plates[index].size() == CAPACITY) has_space.insert(index);
+    int val = plates[index].back(); plates[index].pop_back();
+    if(plates[index].empty()) plates.erase(index);
+    return val;
+  }
+};
 
-// sol2, my, set , O(log(MAX_IDX)) O(N)
+// sol2, my, two set , O(log(MAX_IDX)) O(N)
 class DinnerPlates {
 private:
     vector<vector<int>> plates;
