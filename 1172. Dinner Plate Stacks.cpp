@@ -1,4 +1,4 @@
-// sol3, map+set, the same as sol2, but less code
+// !! sol3, map+set, the same as sol2, but less code
 // from https://leetcode.com/problems/dinner-plate-stacks/discuss/366331/C%2B%2BPython-Two-Solutions
 class DinnerPlates{
 private:
@@ -28,7 +28,7 @@ public:
   }
 };
 
-// sol2, my, two set , O(log(MAX_IDX)) O(N)
+// !! sol2, my, two set , O(log(MAX_IDX)) O(N)
 class DinnerPlates {
 private:
     vector<vector<int>> plates;
