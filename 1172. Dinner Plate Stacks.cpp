@@ -1,3 +1,4 @@
+
 // sol2, my, set , O(log(MAX_IDX)) O(N)
 class DinnerPlates {
 private:
@@ -11,16 +12,16 @@ public:
     }
     
     void push(int val) { //O(log(MAX_IDX))
+        if(has_space.empty()){
+          plates.push_back({});
+          has_space.insert(plates.size() - 1);
+        }
         for(auto v:has_space){
           if(plates[v].empty()) has_val.insert(v); 
           plates[v].push_back(val);
-          if(plates[v].size() == CAPACITY) has_space.erase(v); //O(log(MAX_IDX))
-          
+          if(plates[v].size() == CAPACITY) has_space.erase(v); //O(log(MAX_IDX))          
           return;
         }
-        plates.push_back({val});
-        has_val.insert(plates.size() - 1);
-        if(plates.back().size() < CAPACITY) has_space.insert(plates.size() - 1);
 
     }
     
@@ -48,41 +49,41 @@ public:
 
 
 // sol1, my, TLE
-class DinnerPlates {
-private:
-    vector<vector<int>> plates;
-    int CAPACITY;
-public:
-    DinnerPlates(int capacity) {  // O(MAX_IDX)
-        CAPACITY = capacity;
-    }
+// class DinnerPlates {
+// private:
+//     vector<vector<int>> plates;
+//     int CAPACITY;
+// public:
+//     DinnerPlates(int capacity) {  // O(MAX_IDX)
+//         CAPACITY = capacity;
+//     }
     
-    void push(int val) {
-        for(int i = 0; i < plates.size(); i++){ // O(MAX_IDX)!!!!
-          if(plates[i].size() < CAPACITY){
-            plates[i].push_back(val);
-            return;
-          }
-        }
-        plates.push_back({val});
-    }
+//     void push(int val) {
+//         for(int i = 0; i < plates.size(); i++){ // O(MAX_IDX)!!!!
+//           if(plates[i].size() < CAPACITY){
+//             plates[i].push_back(val);
+//             return;
+//           }
+//         }
+//         plates.push_back({val});
+//     }
     
-    int pop() {
-        for(int i = plates.size() - 1; i >= 0; i--){ // O(MAX_IDX)!!!!
-          if(plates[i].size() > 0){
-            int val = plates[i].back(); plates[i].pop_back();
-            return val;
-          }
-        }
-        return -1;
-    }
+//     int pop() {
+//         for(int i = plates.size() - 1; i >= 0; i--){ // O(MAX_IDX)!!!!
+//           if(plates[i].size() > 0){
+//             int val = plates[i].back(); plates[i].pop_back();
+//             return val;
+//           }
+//         }
+//         return -1;
+//     }
     
-    int popAtStack(int index) {
+//     int popAtStack(int index) {
         
-        if(index < plates.size() && index >= 0 && plates[index].size() > 0){
-          int val = plates[index].back(); plates[index].pop_back();
-          return val;
-        }
-        return -1;
-    }
-};
+//         if(index < plates.size() && index >= 0 && plates[index].size() > 0){
+//           int val = plates[index].back(); plates[index].pop_back();
+//           return val;
+//         }
+//         return -1;
+//     }
+// };
