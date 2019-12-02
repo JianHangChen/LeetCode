@@ -69,13 +69,11 @@ public:
         map<int, double> time;
         for(int i = 0; i <  position.size(); i++){
             time[-position[i]] = (double)(target - position[i])/speed[i];
-            cout << time[-position[i]] << endl;
         }
         double cur_time = 0; //!!!careful about the double to int conversion
         int res = 0;
         for(auto t:time){
             if(t.second > cur_time){
-                cout << "t: "<< t.second << " cur time" << cur_time << endl;
                 res++;
                 cur_time = t.second;
             }
@@ -95,7 +93,6 @@ public:
 
         for(int i = 0; i < position.size(); i++){
             time[position[i]] = ((double)(target - position[i]))/speed[i];
-            cout << "time" << time[position[i]] << endl;
         }
         vector<int> t_sort_position;
         for(auto t:time){
