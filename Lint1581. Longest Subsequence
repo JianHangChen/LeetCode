@@ -1,0 +1,74 @@
+
+
+// sol2, from ch2, similar to sol2, but less space, no need for set
+
+class Solution{
+ public:
+  string longestSubsequence(unordered_set<string> &dic, string &s){
+      string ans = "";
+      int l = s.size();
+      
+      for(auto& word:dic){
+          int lw = word.size();
+          if(lw > l) continue;
+          int i = 0, j = 0 ;
+          while(i < lw && j < l){
+              if(word[i] == s[j]){
+                  i++; j++;
+                  continue;
+              }
+              else j++;
+          }
+          if(i == lw){
+              if(lw > ans.size()){
+                  ans = word;
+              }
+              else if(lw == ans.size() && word < ans){
+                  ans = word;
+              }
+          }
+      }
+      return ans;
+  }
+};
+
+// sol1, my, two pointer, O(nm), O(nm), n is dic.size, m is maxlenth of the string 
+// use set
+
+// class Solution {
+// public:
+//     /**
+//      * @param dic: a dictionary
+//      * @param s: a string
+//      * @return: the longest one existed in the given dictionary
+//      */
+//     string longestSubsequence(unordered_set<string> &dic, string &s) {
+//         set<string> ans({""});
+//         int max_length = 0;
+//         int l = s.size();
+//         for(auto& word:dic){
+//             int lw = word.size();
+//             if(lw > l) continue;
+//             int i = 0, j = 0;
+//             while(i < lw && j < l){
+//                 if(word[i] == s[j]){
+//                     i++; j++;
+//                     continue;
+//                 }
+//                 else j++;
+//             }
+//             if(i == lw){
+//                 if(lw > max_length){
+//                     ans.clear();
+//                     ans.insert(word);
+//                     max_length = lw;
+                    
+//                 }
+//                 else if( lw == max_length){
+//                     ans.insert(word);
+//                 }
+//             }
+//         }
+//         return *ans.begin();
+//     }
+// };
