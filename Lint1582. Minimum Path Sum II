@@ -1,0 +1,31 @@
+class Solution {
+private:
+    vector<vector<int>> directions = {{0,1}, {0, -1}, {1, 0}, {-1, 0}};
+public:
+    /**
+     * @param matrix: a matrix
+     * @return: the minimum height
+     */
+    int minPathSumII(vector<vector<int>> &matrix) {
+        if(matrix.size() == 0) return -1;
+        int n = matrix.size(), m = matrix[0].size();
+    
+        vector<vector<int>> pathSum(n, vector<int> (m, INT_MAX));
+        pathSum[n - 1][0] = matrix[n - 1][0];
+        
+        dfs(n - 1, 0, pathSum, n, m, matrix);
+        return pathSum[0][m - 1];
+    }
+    void dfs(int i, int j, vector<vector<int>>& pathSum, int n, int m, vector<vector<int>> &matrix){
+        for(auto dir:directions){
+            int x = i + dir[0], y = j + dir[1];
+            if(x >= 0 && x < n && y >= 0 && y < m && pathSum[x][y] > pathSum[i][j] + matrix[x][y]){
+                pathSum[x][y] = pathSum[i][j] + matrix[x][y];
+                dfs(x, y, pathSum, n, m, matrix);
+            }
+        }
+        return;
+    } 
+    
+    
+};
