@@ -1,4 +1,5 @@
-// sol3, dfs
+
+// // sol3, dfs, O(mn*max(m,n)), for all nodes mn, each node might be visited multiple times, the maximum exploration in one direction is max(m,n), space O(mn) for distance matrix
 class Solution {
 public:
     vector<int> di = {0,0,1,-1}, dj = {1,-1,0,0};
@@ -31,7 +32,74 @@ public:
 };
 
 
-sol2, dijstra
+
+
+
+
+
+//!!!!! sol2.1, my dijkstra, O(mn log(mn)), O(mn)
+
+
+// not clear how to use cmp in set
+// struct CMP{
+//     bool operator()(const vector<int>& a, const vector<int>& b) const{
+//         return a[0] < b[0];
+//     }
+// };
+
+
+class Solution{
+private:    
+    vector<vector<int>> directions = {{0,-1}, {0,1}, {1,0}, {-1,0}};
+public:
+
+    
+    int shortestDistance(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination){
+        
+
+        int m = maze.size(), n = maze[0].size();
+        
+        // not clear how to use cmp in set
+        // set<vector<int>, CMP> s;
+               
+        set<vector<int>> s;
+        
+        vector<vector<int>> distance(m, vector<int> (n, INT_MAX));
+        s.insert({0, start[0], start[1]});
+        distance[start[0]][start[1]] = 0;
+        
+        while(!s.empty()){
+            auto t = *(s.begin()); s.erase(t);
+            int dist = t[0], x = t[1], y = t[2];
+            if(x == destination[0] && y == destination[1]) return dist;
+            
+            for(auto dir:directions){
+                int dist_ = dist, x_ = x, y_ = y;
+                while(valid(x_ + dir[0], y_ + dir[1], maze, m, n)){
+                    x_ = x_ + dir[0]; y_ = y_ + dir[1];
+                    dist_++;
+                }
+                if(dist_ >= distance[x_][y_]) continue;
+                distance[x_][y_] = dist_;
+                
+                s.insert({dist_, x_, y_});
+            }
+        }
+        if(distance[destination[0]][destination[1]] == INT_MAX){
+            distance[destination[0]][destination[1]] = -1;
+        }
+        return distance[destination[0]][destination[1]];
+    }
+    
+    bool valid(int x, int y, vector<vector<int>>& maze, int m, int n){
+        if(x < 0 || y < 0 || x >= m || y >= n) return false;
+        if(maze[x][y] == 1) return false;
+        return true;
+    }
+};
+
+
+// // sol2, dijstra
 class Solution {
 public:
     vector<int> di = {0,0,1,-1}, dj = {1,-1,0,0};
@@ -72,7 +140,52 @@ public:
 };
 
 
-sol1, bfs
+// !!! sol1.1, my, bfs, O(mn max(m,n)), O(mn)
+O(mn*max(m,n)), for all nodes, each node the maximum exploration in one direction is max(m,n) O(mn) for distance matrix
+class Solution {
+private:
+    vector<vector<int>> directions = {{0,-1}, {0,1}, {1,0}, {-1,0}}; 
+public:
+    int shortestDistance(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+        int m = maze.size(), n = maze[0].size();
+        queue<vector<int>> q({start});
+        
+        vector<vector<int>> distance(m, vector<int> (n, INT_MAX));
+        distance[start[0]][start[1]] = 0;
+        
+        while(!q.empty()){
+            auto t = q.front(); q.pop();
+            
+            for(auto dir:directions){
+                int x = t[0], y = t[1], l = 0;
+                while(valid( x + dir[0], y + dir[1], maze, m, n) ){
+                    x = x + dir[0];
+                    y = y + dir[1];
+                    l++;
+                }
+                if( distance[t[0]][t[1]] + l < distance[x][y]){
+                    distance[x][y] = distance[t[0]][t[1]] + l;
+                    if(x == destination[0] && y == destination[1]){
+                        continue;
+                    }
+                    q.push({x,y});
+                }
+            }
+            
+        }
+        
+        return distance[destination[0]][destination[1]] == INT_MAX ? -1 : distance[destination[0]][destination[1]];
+    }
+    
+    bool valid(int x, int y, vector<vector<int>>& maze, int m, int n){
+        if(x < 0 || x >= m || y < 0 || y >= n) return false;
+        if(maze[x][y] == 1) return false;
+        return true;
+    }
+};
+
+
+// sol1, bfs
 class Solution {
 public:
     vector<int> di = {0,0,1,-1}, dj = {1,-1,0,0};
