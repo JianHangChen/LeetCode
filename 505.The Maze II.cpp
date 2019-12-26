@@ -1,5 +1,6 @@
 
-// // sol3, dfs, O(mn*max(m,n)), for all nodes mn, each node might be visited multiple times, the maximum exploration in one direction is max(m,n), space O(mn) for distance matrix
+// // sol3, dfs, O(mn*max(m,n)), for all nodes mn, each node might be visited multiple times, 
+//the maximum exploration in one direction is max(m,n), space O(mn) for distance matrix
 class Solution {
 public:
     vector<int> di = {0,0,1,-1}, dj = {1,-1,0,0};
@@ -38,12 +39,13 @@ public:
 
 
 //!!!!! sol2.1, my dijkstra, O(mn log(mn)), O(mn)
-
-
-// not clear how to use cmp in set
 // struct CMP{
 //     bool operator()(const vector<int>& a, const vector<int>& b) const{
-//         return a[0] < b[0];
+//         if(a[0] < b[0]) return true;
+//         if(a[0] > b[0]) return false;
+//         if(a[1] < b[1]) return true;
+//         if(a[1] > b[1]) return false;
+//         return a[2] < b[2];
 //     }
 // };
 
@@ -55,13 +57,10 @@ public:
 
     
     int shortestDistance(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination){
-        
 
         int m = maze.size(), n = maze[0].size();
         
-        // not clear how to use cmp in set
-        // set<vector<int>, CMP> s;
-               
+        // set<vector<int>, CMP> s;               
         set<vector<int>> s;
         
         vector<vector<int>> distance(m, vector<int> (n, INT_MAX));
@@ -80,8 +79,9 @@ public:
                     dist_++;
                 }
                 if(dist_ >= distance[x_][y_]) continue;
-                distance[x_][y_] = dist_;
                 
+                s.erase({distance[x_][y_],x_,y_}); // real dijkstra
+                distance[x_][y_] = dist_;
                 s.insert({dist_, x_, y_});
             }
         }
@@ -141,7 +141,7 @@ public:
 
 
 // !!! sol1.1, my, bfs, O(mn max(m,n)), O(mn)
-O(mn*max(m,n)), for all nodes, each node the maximum exploration in one direction is max(m,n) O(mn) for distance matrix
+// O(mn*max(m,n)), for all nodes, each node the maximum exploration in one direction is max(m,n) O(mn) for distance matrix
 class Solution {
 private:
     vector<vector<int>> directions = {{0,-1}, {0,1}, {1,0}, {-1,0}}; 
