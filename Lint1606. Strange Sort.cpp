@@ -18,7 +18,7 @@ public:
     }
     
     int partition(vector<int>& num, vector<int>& cost, int lo, int hi){
-        int r = lo + rand() % (hi - lo);
+        int r = lo + rand() % (hi - lo + 1);
         swap(num[lo], num[r]);
         swap(cost[lo], cost[r]);
         
