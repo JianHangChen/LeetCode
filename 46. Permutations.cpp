@@ -1,5 +1,39 @@
-// !!! my the same as sol2, between O(n!)  and O(n*n!),  space O(n!)
-// (sum[(n)!] ) -> better than (n*n!), worse than O(n!)
+
+/// !!! my backtracking, repeat sol1.1, between O(n!)  and O(n*n!),  space O(n!)
+//n + n(n-1) + ... + n!   =  C(n, 1) + C(n,2) + ...C(n, n) = sum( n!/(n-k)! ) = 
+class Solution{
+public:
+    vector<vector<int>> permute(vector<int>& nums){
+        vector<vector<int>> res;    
+        permute(0, nums, res);
+        return res;
+    }
+
+    void permute(int level, vector<int>& nums, vector<vector<int>>& res){
+        if(level + 1 == nums.size()){
+            res.push_back(nums);
+            return;
+        }
+        
+        for(int i = level; i < nums.size(); i++){
+            swap(nums[level], nums[i]);
+            permute(level+1, nums, res);
+            swap(nums[level], nums[i]);
+        }
+    }
+    
+};
+
+
+// !!! my the same as sol2,  space O(n!)
+// (sum[(n)! * n] ) -> better than (n^2*n!), worse than O(n! * n)
+
+// (n - 1)! * n^2
+// [1 ... , n -1]
+// for 1, O(n-1)
+// for2, O(n-2)
+// for(n-1), O(0)
+// n - 1 + ... + 1 -> O(n^2)
 class Solution{
 public:
   vector<vector<int>> permute(vector<int>& nums){
