@@ -1,3 +1,29 @@
+// !!! my the same as sol2, between O(n!)  and O(n*n!),  space O(n!)
+// (sum[(n)!] ) -> better than (n*n!), worse than O(n!)
+class Solution{
+public:
+  vector<vector<int>> permute(vector<int>& nums){
+    vector<vector<int>> res = {{}}, tmp;
+    int n = nums.size();
+    if(n == 0) return {};
+
+    for(int i = 0; i < n; i++){
+      for(auto& v:res){
+        for(int j = 0; j <= v.size(); j++){
+          vector<int> ele = v;
+          ele.insert(ele.begin() + j, nums[i]);
+          tmp.push_back(ele);
+        }
+      }
+      res = tmp;
+      tmp.clear();
+    }
+    return res;
+  }
+
+};
+
+
 
 // ! sol3, from gy3, recursively
 
