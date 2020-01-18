@@ -26,7 +26,8 @@ public:
 
 
 // !!! my the same as sol2,  space O(n!)
-// (sum[(n)! * n] ) -> better than (n^2*n!), worse than O(n! * n)
+// (sum[(n-1)!] ) -> better than (n!), worse than O(n*n!)
+// if we think push_back and insert to ele has length k, then it should be times n, sum[(n)!] 
 
 // (n - 1)! * n^2
 // [1 ... , n -1]
