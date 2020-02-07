@@ -1,4 +1,40 @@
-// !!! sol1, my, iteratively, O(n), O(n), same as ans2
+
+
+TreeNode* reversLinkedList(TreeNode* root, int m, int n){
+    TreeNode* dummy = new TreeNode(0);
+    dummy->next = root;
+
+    TreeNode* pre = dummy, *cur = root, *next, *head, *head_pre, *tail, *tail_next;
+    int i = 1;
+    while(cur){
+        if(i == m){
+            head = cur;
+            head_pre = pre;
+        }
+        if(i == n){
+            tail = cur;
+            tail_next = tail->next;
+        }
+        if(i >= m && i <= n){
+            next = cur->next;
+            cur->next = pre;     
+            pre = cur;
+            cur = next;
+        }else{
+            pre = cur;
+            cur = cur->next;
+        }
+
+        i++;
+    }
+
+    head->next = tail_next;
+    head_pre->next = tail;
+    return dummy->next; 
+};
+
+
+// !!! sol1, my, iteratively, O(n), O(1), same as ans2
 class Solution{
 public:
   ListNode* reverseBetween(ListNode* head, int m , int n){
