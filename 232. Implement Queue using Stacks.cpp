@@ -1,40 +1,56 @@
-class MyQueue{
-private:
+// !!! my sol1, same as gy2
+class MyQueue {
     stack<int> s1, s2;
-    
 public:
-    MyQueue(){
-        
+    /** Initialize your data structure here. */
+    MyQueue() {
     }
     
-    void push(int i){
-        s1.push(i);
+    
+    // O(1)
+    /** Push element x to the back of queue. */
+    void push(int x) { 
+        s1.push(x);
     }
     
-    int peek(){
-        if(s2.empty()){
-            while(!s1.empty()){
-                s2.push(s1.top()); s1.pop();
+    // O(n) worst, O(1) amortized
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        if(!empty()){
+            if(s2.empty()){
+                while(!s1.empty()){
+                    s2.push(s1.top()); s1.pop();
+                }
             }
+            int top = s2.top(); s2.pop();
+            return top;
+        }        
+        return -1;
+    }
+    
+    
+    // O(n)
+    /** Get the front element. */
+    int peek() {
+        if(!empty()){
+            if(s2.empty()){
+                while(!s1.empty()){
+                    s2.push(s1.top()); s1.pop();
+                }
+            } 
+            return s2.top();
         }
-        return s2.top();
+        return -1;
     }
     
-    int pop(){
-        if(s2.empty()){
-            while(!s1.empty()){
-                s2.push(s1.top()); s1.pop();
-            }
-        }
-        int t = s2.top(); s2.pop();
-        return t;
+    // O(1)
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return s1.empty() && s2.empty();
     }
-    
-    bool empty(){
-        return (s1.empty() && s2.empty());
-    }
-    
 };
+
+
 
 
 #amortized O(1) pop()
