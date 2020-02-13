@@ -1,4 +1,21 @@
-// sol2, two hash version, O(kn), O(k)
+// !!! sol3, O(n), O(n)
+
+class Solution{
+public:
+    int majorityNumber(vector<int>& nums, int k){
+        unordered_map<int, int> m;
+        int n = nums.size();
+        for(auto num:nums){
+            m[num]++;
+            if(m[num] > n/k) return num;
+        }
+        return -1;
+    }
+};
+
+
+
+// !!! sol2, two hash version, O(kn), O(k)
 // https://wdxtub.com/interview/14520595473216.html
 class Solution{
 public:
