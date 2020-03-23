@@ -1,4 +1,4 @@
-//!!! sol3, greedy, from sol, O(n)
+//!!! sol3, greedy, from sol, O(n), O(1)
 
 class Solution{
 public:
@@ -19,7 +19,7 @@ public:
 };
 
 
-// sol2, my, bfs, tle, O()
+sol2, my, bfs, tle, O(n^2)
 class Solution{
 public:
     int jump(vector<int>& nums){
