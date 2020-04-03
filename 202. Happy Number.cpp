@@ -1,3 +1,52 @@
+// sol2, floyd's cycle finding
+class Solution {
+public:
+    bool isHappy(int n) {
+        int first = n, second = n;
+        
+        while(true){
+            first = next(first);
+            second = next(next(second));
+            if(first == second) break;
+        }
+        return first == 1;
+    }
+    int next(int n){
+        int square_sum = 0;
+        while(n){
+            square_sum += pow((n%10), 2);
+            n /= 10;
+        }
+        return square_sum;
+    }
+};
+
+
+// my sol1, use unordered_set, O(logn), O(logn), for the number bigger than 243, it will not come back, so the space complexity could be O(243)
+class Solution {
+public:
+    bool isHappy(int n) {
+        unordered_set<int> s;
+        while(n){
+            if(s.count(n) > 0) return false;
+            if(n == 1) return true;
+            s.insert(n);
+            
+            int square_sum = 0;
+            while(n){
+                square_sum += pow((n % 10), 2);
+                n /= 10;
+            }
+            n = square_sum;
+            
+        }
+        return false;
+        
+    }
+};
+
+
+
 class Solution:
 
 
