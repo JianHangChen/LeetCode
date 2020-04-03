@@ -1,3 +1,4 @@
+
 //!!!!! sol3.1 revise sol3 from gy3, O(n), O(1)
 // worst case O(n^2)
 class Solution {
@@ -106,5 +107,29 @@ public:
             }
         }
         return *(s.begin());
+    }
+
+// sol1, my, priority_queue, O(nlogk), O(k)
+class Solution {
+public:
+    struct CMP{
+        bool operator()(const int& a,const int& b){
+            return a > b;
+        }
+    };
+    
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, CMP> pq;
+        for(int num:nums){
+            if(pq.size() < k){
+                pq.push(num);
+            }
+            else{
+                pq.push(num);
+                pq.pop();
+            }
+            
+        }
+        return pq.top();
     }
 };
