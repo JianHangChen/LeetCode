@@ -1,3 +1,65 @@
+// !!! sol1.1, my, change from gy2, use Node* to Node* mapping
+// use queue, O(E+V), O(V)
+class Solution {
+public:
+    Node* cloneGraph(Node* node) {
+        if(!node) return NULL;
+        
+        unordered_map<Node*, Node*> m;
+        queue<Node*> q;
+        q.push(node);
+        Node* head = new Node(node->val);
+        m[node] = head;
+        
+        while(!q.empty()){
+            auto cur = q.front(); q.pop();
+            auto new_node = m[cur];
+            for(auto nei:cur->neighbors){
+                if(m.count(nei) ==0 ){
+                    m[nei] = new Node(nei->val);
+                    q.push(nei);
+                }
+                new_node->neighbors.push_back(m[nei]);
+
+            }
+        }
+        return head;
+    }
+};
+
+
+
+// sol1, my, use queue, O(E+V), O(V)
+class Solution {
+public:
+    Node* cloneGraph(Node* node) {
+        if(!node) return NULL;
+        
+        unordered_map<int, Node*> m;
+        queue<Node*> q;
+        q.push(node);
+        Node* head = new Node(node->val);
+        m[node->val] = head;
+        
+        while(!q.empty()){
+            auto cur = q.front(); q.pop();
+            for(auto nei:cur->neighbors){
+                if(m.count(nei->val) ==0 ){
+                    Node* new_nei = new Node(nei->val);
+                    m[cur->val]->neighbors.push_back(new_nei);
+                    m[nei->val] = new_nei;
+                    q.push(nei);
+                }
+                else{
+                    m[cur->val]->neighbors.push_back(m[nei->val]);
+                }
+            }
+        }
+        return head;
+    }
+};
+
+
 import collections
 """
 # Definition for a Node.
