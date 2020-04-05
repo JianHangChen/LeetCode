@@ -1,3 +1,37 @@
+
+
+
+// !!!sol1, O(log(n-k) + K), O(k)
+
+// https://leetcode.com/problems/find-k-closest-elements/discuss/106426/JavaC%2B%2BPython-Binary-Search-O(log(N-K)-%2B-K)
+
+
+// Note that, you SHOULD NOT compare the absolute value of abs(x - A[mid]) and abs(A[mid + k] - x).
+// It fails at cases like A = [1,1,2,2,2,2,2,3,3], x = 3, k = 3
+
+
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int low = 0, high = arr.size() - k;
+        while(low < high){
+            int mid = low + (high - low) / 2;
+
+            if( x - arr[mid] > arr[mid + k] - x ){
+                low = mid + 1;
+            }
+            else{
+                high = mid;
+            }
+        }
+        vector<int> res(arr.begin() + low, arr.begin() + low + k);
+        
+        return res;
+        
+    }
+};
+
+
 class Solution:
     
     # test: 1. []. no such one
