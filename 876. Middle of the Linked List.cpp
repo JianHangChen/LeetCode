@@ -1,6 +1,5 @@
 
-//     //sol1, my, two pointer
-
+//sol1, my, two pointer
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
@@ -17,9 +16,6 @@ public:
         }
         return first;
     }
-    
-
-    
 };
 
  //sol1.1, two pointer form sol2, just no need for dummy
