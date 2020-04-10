@@ -7,6 +7,7 @@ public:
         int i = n - 1, j = m - 1;
         int skip_i = 0, skip_j = 0;
         
+        //a##
         while(i >= 0 || j >= 0){
             while(i >= 0){
                 if(S[i] == '#'){ skip_i++; i--;}
@@ -24,7 +25,7 @@ public:
             }
             i--; j--;
         }
-        return i == j;
+        return true;
     }
 };
 
