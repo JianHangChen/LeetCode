@@ -1,4 +1,4 @@
-// sol2.1, from gy3, O(n), O(1)
+// !!!! sol2.1, from gy3, O(n), O(1)
 // similar to my sol2, but more concise
 class Solution {
 public:
