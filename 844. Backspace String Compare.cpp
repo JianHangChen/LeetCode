@@ -1,4 +1,4 @@
-// !!!! sol2.1, from gy3, O(n), O(1)
+// !!! sol2.1, from gy3, O(n), O(1)
 // similar to my sol2, but more concise
 class Solution {
 public:
@@ -8,23 +8,21 @@ public:
         int skip_i = 0, skip_j = 0;
         
         while(i >= 0 || j >= 0){
-            while(i >= 0 && (S[i] == '#' || skip_i > 0)){
-                if(S[i] == '#') skip_i++;
-                else skip_i--;  // S[i]!= '#' and skip_i > 0
-                i--;
+            while(i >= 0){
+                if(S[i] == '#'){ skip_i++; i--;}
+                else if(skip_i > 0){ skip_i--;  i--;}
+                else break;
             }
-            while(j >= 0 && (T[j] == '#' || skip_j > 0) ){
-                if(T[j] == '#') skip_j++;
-                else skip_j--;
-                j--;
+            while(j >= 0){
+                if(T[j] == '#'){ skip_j++; j--;}
+                else if(skip_j > 0){ skip_j--; j--;}
+                else break;
             }
-            // S[i], T[j] != #, skip_i, skip_j = 0
-            if(i < 0 && j >= 0 || i >= 0 && j < 0) return false;
-    
+            if((i>=0) != (j>=0)) return false;
             if(i >= 0 && j >= 0){
                 if(S[i] != T[j]) return false;
-                i--; j--;
             }
+            i--; j--;
         }
         return i == j;
     }
