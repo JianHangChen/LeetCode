@@ -1,11 +1,39 @@
 
-// !!!! sol2, two stack, by grandyang
-// O(1) push, O(1) pop, O(1) top, O(1) getMin
+//!!! my sol3, stack pairs,  O(1), O(n)
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    stack<vector<int>> s;
+    MinStack() {}
+    
+    void push(int x) {
+        if(s.empty()){
+            s.push({x,x});
+        }
+        else{
+            s.push({x, min(x, getMin())});
+        }
+    }
+    
+    void pop() {
+        s.pop();
+    }
+    
+    int top() {
+        return s.top()[0];
+    }
+    
+    int getMin() {
+        return s.top()[1];
+    }
+};
 
+
+
+//!!! sol2, two stack, by grandyang, O(1), O(n)
 class MinStack{
 private:
     stack<int> s1, s2;
-    
     
 public:
     MinStack(){}
@@ -16,7 +44,6 @@ public:
             s2.push(x);
         }
     }
-    
     
     void pop(){
         if(s1.empty()) return;
@@ -30,7 +57,6 @@ public:
     int getMin(){
         return s2.top();
     }
-    
 };
 
 
@@ -69,12 +95,3 @@ public:
   }
   
 };
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack* obj = new MinStack();
- * obj->push(x);
- * obj->pop();
- * int param_3 = obj->top();
- * int param_4 = obj->getMin();
- */
