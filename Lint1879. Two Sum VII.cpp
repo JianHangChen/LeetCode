@@ -1,5 +1,5 @@
 
-// !!!! sol1, from ch9, very hard
+// !!!! sol1, from ch9, very hard, O(n), O(1)
 // find small and big
 class Solution {
 public:
