@@ -1,6 +1,5 @@
 
 
-
 sol2, !!!, run twice, use count to track the element, O(n), O(1)
 class Solution{
 public:
@@ -91,4 +90,87 @@ public:
         
         return (helpler(s, cur+1, cnt+1) || helpler(s, cur+1, cnt-1) || helpler(s, cur+1, cnt));
     }
-};
+    
+    
+
+// my, sol2, brute force, O(3^n*n), O(n)
+// class Solution {
+// public:
+//     bool checkValidString(string s) {
+//         return checkValid(s, 0, 0);
+//     }
+//     bool checkValid(string& s, int i, int score){
+//         if(i == s.size()) return score == 0;
+//         if(s[i] == '(') return checkValid(s, i+1, score+1);
+//         else if(s[i] == ')'){
+//             score--;
+//             if(score < 0) return false;
+//             return checkValid(s, i+1, score);
+//         }
+//         else{
+//             if(checkValid(s, i+1, score)) return true;
+//             if(checkValid(s, i+1, score+1)) return true;
+//             if(score - 1 >= 0 && checkValid(s, i+1, score-1)) return true;
+//             return false;
+//         }
+        
+//     }
+    
+// };
+
+
+// my, sol1,brute force, TLE, O(3^n), O(n)
+// class Solution {
+// public:
+//     bool checkValidString(string s) {
+//         stack<char> st;
+        
+//         return checkValid(s, 0, st) && st.empty();
+        
+//     }
+//     bool checkValid(string& s, int i ,  stack<char>& st){
+//         if(i == s.size()) return st.empty();
+//         if(s[i] == '('){
+//             st.push('(');
+//             bool result = checkValid(s, i+1, st);
+//             st.pop();
+//             return result;
+//         }
+//         else if(s[i] == ')'){
+//             if(st.empty()) return false;
+//             else{
+//                 st.pop();
+//                 if(checkValid(s, i+1, st)){
+//                     st.push('(');
+//                     return true;
+//                 }
+//                 else{
+//                     st.push('(');
+//                     return false;
+//                 }
+//             }
+//         }
+//         else{
+//             st.push('(');
+//             bool result = checkValid(s, i+1, st);
+//             st.pop();
+//             if(result){
+//                 return true;
+//             }
+//             if(checkValid(s, i+1, st)) return true;
+            
+//             if(st.empty()) return false;
+//             else{
+//                 st.pop();
+//                 if(checkValid(s, i+1, st)){
+//                     st.push('(');
+//                     return true;
+//                 }
+//                 else{
+//                     st.push('(');
+//                     return false;
+//                 }
+//             }
+//         }   
+//     }
+// };
