@@ -1,5 +1,15 @@
 
 // !!! form sol2, O(logn), same as gy2
+// check the "direction" of the part [i, mid]
+// if [i, mid] is sorted, then if the target is in [i, mid], the search space is i, mid - 1
+//                              if the target is not in [i, mid] then either it is bigger than nums[mid], or smaller than nums[i], those case locate in [mid + 1, j]
+
+// if [i, mid] is not sorted, then the pivot point is inside [i, mid],
+// so [mid, j] is sorted, then if the target is in [mid, j], then the search space is mid+ 1, j
+//                               if the target is not in [mid, j], then either it is bigger than nums[j], or smaller than nums[mid], those case locate in [i, mid-1]
+
+
+
 class Solution {
 public:
     int search(vector<int>& nums, int target){
