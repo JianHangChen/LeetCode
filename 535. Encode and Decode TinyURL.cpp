@@ -135,7 +135,7 @@ public:
 // count and change to string
 
 // 1. depend on int, overflow
-// 2. short url will have some pattern, lexicographically
+// 2. short url will have some pattern, lexicographically, it's good for performance, bad for secrurity
 // 3. repeated url will generate several different short url
 
 // class Solution {
