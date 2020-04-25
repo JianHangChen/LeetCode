@@ -28,13 +28,13 @@ class Solution{
 public:
     int BeautifulSubarrays(vector<int>& nums, int numOdds){
         vector<int> oddIdx;
-        oddIdx.push_back(0);
+        oddIdx.push_back(-1);
         for(int i = 0; i < nums.size(); i++){
             if(nums[i] % 2 == 1){
-                oddIdx.push_back(i+1);
+                oddIdx.push_back(i);
             }
         }
-        oddIdx.push_back(nums.size() + 1);
+        oddIdx.push_back(nums.size() ); // !!!TML
         if(oddIdx.size() - 1 < numOdds) return 0;
         
         int res = 0;
