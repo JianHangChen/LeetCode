@@ -27,7 +27,7 @@ public:
     string encode(string longUrl){
         if(long2short.count(longUrl) > 0) return long2short[longUrl];
         string key = getKey();
-        if(short2long.count(key) > 0){
+        while(short2long.count(key) > 0){
             key = getKey();
         }
         short2long[key] = longUrl;
@@ -65,7 +65,7 @@ public:
     
 //     string encode(string longUrl){
 //         string key = getKey();
-//         if(m.count(key) > 0){
+//         while(m.count(key) > 0){
 //             key = getKey();
 //         }
 //         m[key] = longUrl;
