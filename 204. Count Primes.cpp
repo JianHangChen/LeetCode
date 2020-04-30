@@ -1,3 +1,25 @@
+// !!! sol1, my, same as gy, O(n), O(n)
+class Solution {
+public:
+    int countPrimes(int n) {
+        vector<bool> exist(n+1, false);
+        int count = 0;
+        for(int i = 2; i < n; i++){
+            if(!exist[i]){
+                count++;
+                for(int j = 2; i * j < n; j++){
+                    exist[i * j] = true;
+                }
+                
+            }
+        }
+        return count;
+        
+    }
+};
+
+
+
 class Solution:
     # sol2, fill out the none prime and skip it
     # https://leetcode.com/problems/count-primes/discuss/57595/Fast-Python-Solution
