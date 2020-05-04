@@ -1,5 +1,5 @@
 
-// my sol1, dfs, O(n), O(logn)
+// my sol1, dfs, O(n), O(N)
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
