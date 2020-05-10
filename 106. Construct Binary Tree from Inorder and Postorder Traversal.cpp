@@ -1,31 +1,29 @@
-// sol2, use map to avoid list search, O(n), O(n)
+
+
+// !!! sol2, use map to avoid list search, O(n), O(n)
+// inorder =  |9| |3|  |15,20,7|
+// postorder = |9| 15,7,20 |3|
+
 class Solution {
 public:
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder){
-        int n = inorder.size();
-        unordered_map<int, int> m;
-        for(int i = 0; i < n; i++){
-            m[inorder[i]] = i;
-        }
-        return reconstruct(inorder, 0, n - 1, postorder, 0, n - 1, m);
+    unordered_map<int, int> m;
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        for(int i = 0; i < inorder.size(); i++) m[inorder[i]] = i;
+        
+        return buildTree(inorder, 0, inorder.size() - 1, postorder, 0, postorder.size() - 1);
+        
     }
-
-    TreeNode* reconstruct(vector<int>& inorder, int i, int j, vector<int>& postorder, int a, int b, unordered_map<int, int>& m){        
-        TreeNode* res;
-        if(i > j || a > b) return NULL;
-
-        if(i == j){
-            res = new TreeNode(inorder[i]);
-            return res;
-        }
-
+    TreeNode* buildTree(vector<int>& inorder, int i, int j, vector<int>& postorder, int a, int b) {
+        if(i > j) return NULL;
+        TreeNode* root = new TreeNode(postorder[b]);
         int pivot = m[postorder[b]];
-        res = new TreeNode(inorder[pivot]);
-        res->left = reconstruct(inorder, i, pivot - 1, postorder, a, a + pivot - i - 1, m);
-        res->right = reconstruct(inorder, pivot + 1, j, postorder, a + pivot - i, b - 1, m);
-        return res;
+        int left_len = pivot - i;
+        root->left = buildTree(inorder, i, pivot - 1, postorder, a, a + left_len - 1);
+        root->right = buildTree(inorder, pivot+1, j, postorder, a + left_len, b - 1);
+        return root;
+        
     }
-
+    
 };
 
 
