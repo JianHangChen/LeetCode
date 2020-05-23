@@ -1,15 +1,6 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 
 
-//!!!sol2.1, iteratively from gy2,
+//!!!sol2.1, iteratively from gy2, O(logn), O(1)
 class Solution {
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
