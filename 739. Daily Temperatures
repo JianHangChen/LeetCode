@@ -24,6 +24,7 @@ public:
 };
 
 //sol3, ! use stack, decreasing stack , from grandyang
+// O(n), O(w)
 
 // class Solution{
 // public:
