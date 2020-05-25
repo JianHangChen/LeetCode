@@ -1,3 +1,76 @@
+// sol2, !!!! true O(n), O(1)
+
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& T){
+        int n = T.size();
+        vector<int> res(n, 0);
+        
+        for(int i = n - 1; i >= 0; i--){
+            int j = i+1;
+            while(j < n){
+                if(T[i] < T[j]){
+                    res[i] = j - i;
+                    break;
+                }
+                else{
+                    if(res[j] == 0) break;
+                    j = j + res[j];
+                }
+            }
+        }
+        return res;        
+    }
+};
+
+//sol3, ! use stack, decreasing stack , from grandyang
+
+// class Solution{
+// public:
+//     vector<int> dailyTemperatures(vector<int> & T){
+//         int n = T.size();
+//         stack<int> st;
+//         vector<int> res(n, 0);
+        
+//         for(int i = 0; i < n; i++){
+//             while(!st.empty() && T[st.top()] < T[i]){
+//                 int j = st.top(); st.pop();
+//                 res[j] = i - j;
+//             }
+
+//             st.push(i);
+            
+//         }
+//         return res;        
+//     }
+// };
+
+// sol1, my O(nw), O(w)
+// class Solution {
+// public:
+//     vector<int> dailyTemperatures(vector<int>& T) {
+//         int n = T.size();
+//         vector<int> pos(101, -1);
+//         vector<int> res(n, 0);
+        
+        
+//         for(int i = n-1; i >= 0; i--){
+//             pos[T[i]] = i;
+            
+//             for(int temp = T[i] + 1; temp <= 100; temp++){
+//                 if(pos[temp] != -1){
+//                     if(res[i] == 0) res[i] = pos[temp] - i;
+//                     else res[i] = min(res[i], pos[temp] - i); 
+//                 }    
+//             }
+//         }
+//         return res;
+        
+//     }
+// };
+
+
+
 class Solution:
     # sol1, O(n) no need to use stack
     def dailyTemperatures(self, T: List[int]) -> List[int]:
