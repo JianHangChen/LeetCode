@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    //!!!, from sol1 of grandyang
     //test: [], [1]
     // [1], [2]
     // [1], []
