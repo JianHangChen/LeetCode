@@ -1,4 +1,45 @@
-// !!! sol3, O(n), O(n)
+
+// !!! sol4, from ch9 sol2, using map, O(n), O(k)
+
+class Solution {
+public:
+    int majorityNumber(vector<int> &nums, int k) {
+       if(k == 0|| nums.empty()) return -1;
+       int n = nums.size();
+       int s = n / k;
+       unordered_map<int, int> m;
+       for(int num:nums){
+           if(m.count(num) > 0) m[num]++;
+           else{
+               if(m.size() < k){
+                   m[num]++;
+               }
+               else{
+                   vector<int> tmp;
+                   for(auto& it:m){
+                       it.second--; // the total decrease will  <= O(n)
+                       if(it.second == 0) tmp.push_back(it.first);
+                   }
+                   for(int i:tmp) m.erase(i); // cannot delete the element when iterate in m
+               }
+           }
+       }
+       
+       int res, max_count = 0;
+       for(auto& it:m){
+           if(it.second > max_count){
+               max_count = it.second;
+               res = it.first;
+           }
+       }
+       return res;
+        
+    }
+};
+
+
+
+// my,sol3, O(n), O(n)
 
 class Solution{
 public:
@@ -15,7 +56,7 @@ public:
 
 
 
-// !!! sol2, two hash version, O(kn), O(k)
+// sol2, two hash version, O(n), O(k)
 // https://wdxtub.com/interview/14520595473216.html
 class Solution{
 public:
