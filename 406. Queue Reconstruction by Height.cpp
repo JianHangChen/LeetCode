@@ -1,5 +1,5 @@
 // !!! sol1, from gy1
-// O(nlogn), O(n), sort and insert, preserve order information when adding smaller element
+// O(n^2), O(n) sort and insert, preserve order information when adding smaller element
 
 struct CMP{
   bool operator()(vector<int>& a, vector<int>& b) const{
@@ -47,8 +47,8 @@ public:
       for(int i = 0; i < n; i++){
         auto tmp = people[i];
         if(tmp[1] != i){
-          people.erase(people.begin() + i);
-          people.insert(people.begin() + tmp[1], tmp);
+          people.erase(people.begin() + i); 
+          people.insert(people.begin() + tmp[1], tmp);// always insert to existing element or the last element.
         }
       }
       return people;
