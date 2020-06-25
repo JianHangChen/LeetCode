@@ -1,5 +1,5 @@
 
-// sol2, O(NlogN), min_heap
+// !!!sol2, O(NlogN), min_heap
 // https://leetcode.com/problems/minimum-cost-to-connect-sticks/discuss/365865/Python-Greedy-Solution
 class Solution {
 public:
