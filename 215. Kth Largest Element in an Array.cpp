@@ -1,3 +1,46 @@
+//!!!!! sol3.1 use this one as final
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        k = nums.size() - k + 1;
+        int left = 0, right = nums.size() - 1;
+        int pivot = left;
+        while(left <= right){
+            pivot = partition(nums, left, right);
+            
+            if(pivot + 1 == k) return nums[pivot];
+            else if(pivot + 1 > k){
+                right = pivot - 1;
+            }
+            else{
+                left = pivot + 1;
+            }
+        }
+        return nums[pivot];
+    }
+    int partition(vector<int>& nums, int left, int right){
+        if(left == right) return left;
+        int tmp = rand() % (right - left + 1) + left;
+        swap(nums[tmp], nums[left]);
+        int pval = nums[left];
+        
+        int l = left + 1, r = right;
+        while(l <= r){
+            if(nums[l] > pval && nums[r] < pval){
+                swap(nums[l++], nums[r--]);
+            }
+            else if(nums[r] >= pval){
+                r--;
+            }
+            else{
+                l++;
+            }
+        }
+        swap(nums[left], nums[r]);
+        return r;
+    }
+};
+
 
 //!!!!! sol3.1 revise sol3 from gy3, O(n), O(1)
 // worst case O(n^2)
