@@ -176,3 +176,46 @@ public:
         return pq.top();
     }
 };
+
+    
+    
+// sol1.1, priority_queque real implementation without library
+class Solution {
+public:
+    int n;
+    int findKthLargest(vector<int>& nums, int k) {
+        n = nums.size();
+        buildpq(nums);
+        
+        int res;
+        for(int i = 0; i < k; i++){
+            res = pop(nums);
+        }
+        return res;
+    }
+    int pop(vector<int>& nums){
+        int res = nums[0];
+        swap(nums[0], nums[n-1]);
+        n--;
+        siftdown(nums, 0);
+        return res;
+        
+    }
+    
+    void buildpq(vector<int>& nums){
+        for(int i = n; i >= 0; i--){
+            siftdown(nums, i);
+        }
+    }
+    void siftdown(vector<int>& nums, int i){
+        int largest = i;
+        int left = i * 2 + 1, right = i * 2 + 2;
+        if(left < n && nums[left] > nums[i]) largest = left;
+        if(right < n && nums[right] > nums[largest]) largest = right;
+        if(largest != i){
+            swap(nums[i], nums[largest]);
+            siftdown(nums, largest);
+        }
+    }
+    
+};
