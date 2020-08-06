@@ -22,6 +22,52 @@ public:
 };
 
 
+
+// sol5, from sol2, O(n), O(n), quick select
+// class Solution {
+// public:
+//     vector<int> topKFrequent(vector<int>& nums, int k) {
+//         vector<int> res;
+//         unordered_map<int, int> m;
+//         for(int num:nums) m[num]++;
+//         vector<int> numbers;
+//         for(auto& item:m) numbers.push_back(item.first);
+//         k = numbers.size() - k; // top k infrequent
+        
+//         quickselect(numbers, m, 0, numbers.size() - 1, k);
+//         for(int i = k; i < numbers.size(); i++) res.push_back(numbers[i]);
+//         return res;        
+//     }
+//     void quickselect(vector<int>& numbers, unordered_map<int, int>& m, int start, int end, int k){
+//         if(start == end) return;
+        
+//         int pivot = partition(numbers, m, start, end);
+        
+//         if(pivot == k - 1) return; // find the top k infrequent
+//         else if(pivot > k - 1) quickselect(numbers, m, start, pivot - 1, k);
+//         else quickselect(numbers, m, pivot + 1, end, k);
+//     }
+    
+//     int partition(vector<int>& numbers, unordered_map<int, int>& m, int start, int end){
+//         int t = start + random() % (end - start + 1);
+//         swap(numbers[start], numbers[t]);   
+        
+//         int pivot_val = m[numbers[start]];
+//         int l = start + 1, r = end;
+//         while(l <= r){
+//             if(m[numbers[l]] > pivot_val && m[numbers[r]] <= pivot_val){
+//                 swap(numbers[l++], numbers[r--]);
+//             }
+//             else if(m[numbers[l]] <= pivot_val) l++;
+//             else r--;
+//         }
+//         swap(numbers[start], numbers[r]);
+//         return r;
+//     }
+    
+// };
+
+
 // sol3, priority queue,  O(nlog(n-k)), O(n), n is the unique number in nums
 // class Solution {
 // public:
