@@ -1,4 +1,4 @@
-//!!! sol2, floyd's cycle finding
+//!!! sol2, floyd's cycle finding, O(logn), O(1)
 class Solution {
 public:
     bool isHappy(int n) {
