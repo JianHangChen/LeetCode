@@ -21,7 +21,7 @@
     
     
 
-    //sol2, two pointer
+    //!!! sol2, two pointer, O(n)
 
     vector<int> twoSum(vector<int>& numbers, int target) {
         vector<int> res;
