@@ -9,6 +9,56 @@
  */
 
 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+// !!! sol2.1, my, similar to gy2, use hashmap to dfs record parent, bfs get res, O(n), O(n)
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
+        vector<int> res;
+        unordered_map<TreeNode*, TreeNode*> parent;
+       
+        dfs(root, parent, NULL);
+        unordered_set<TreeNode*> visited({target});
+        queue<TreeNode*> q({target});
+        while(K > 0){
+            int l = q.size();
+            for(int i = 0; i < l; i++){
+                TreeNode* cur = q.front(); q.pop();
+                vector<TreeNode*> next = {cur->left, cur->right, parent[cur]};
+                for(auto node:next){
+                    if(node && visited.count(node) == 0){
+                        visited.insert(node);
+                        q.push(node);
+                    }
+                }
+            }
+            K--;     
+        }
+        while(!q.empty()){
+            res.push_back(q.front()->val); q.pop();
+        }
+        return res;
+    }
+    
+    void dfs(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parent, TreeNode* father){
+        if(!root) return;
+        parent[root] = father;
+        dfs(root->left, parent, root);
+        dfs(root->right, parent, root);        
+    }
+    
+};
+
+
 //sol2, from gy2, use hashmap to record parent, bfs, O(n), O(n)
 class Solution{
 private:
