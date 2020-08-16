@@ -22,29 +22,32 @@ public:
 
 
 // ! sol1, from sol1, dp, O(n), O(n), seperate the problem to two subproblem: divide and conquer
-class Solution {
+origin [1 5 2 7 8 3]
+left   [0 4 4 6 7 7]
+right  [7 3 6 0 0 0]
+
+class Solution{
 public:
-    int maxProfit(vector<int>& prices) {
+    int maxProfit(vector<int>& prices){
         int n = prices.size();
         if(n <= 1) return 0;
-        vector<int> leftprofit(n+1, 0), rightprofit = leftprofit;
-        int leftmin = prices[0];
-        for(int i = 2; i <= n; i++){
-            if(prices[i-1] < leftmin) leftmin = prices[i-1];
-            leftprofit[i] = max(leftprofit[i-1], prices[i-1] - leftmin);
+        vector<int> left(n), right(n+1); // i included
+        int min_val = prices[0], max_val = prices[n-1];
+        for(int i = 1; i < n; i++){
+            min_val = min(min_val, prices[i]);
+            int profit = prices[i] - min_val;
+            left[i] = max(profit, left[i-1]);
         }
-        int rightmax = prices[n-1];
-        // [3, 3 ,5,0,0,3,1,4]  n =8
-        // 0  1  2 3 4 5 6 7  8
-        for(int i = n - 2; i >= 0; i--){
-            if(prices[i] > rightmax) rightmax = prices[i];
-            rightprofit[i] = max(rightprofit[i+1], rightmax - prices[i]);
-        }
-        int profit = 0;
-        for(int i = 0; i <= n; i++){
-            profit = max(profit, leftprofit[i] + rightprofit[i]);
+        for(int i = n -2; i >= 0; i--){
+            max_val = max(max_val, prices[i]);
+            int profit = max_val - prices[i];
+            right[i] = max(profit, right[i+1]);
         }
         
-        return profit;
-    }
+        int res = 0;
+        for(int i = 0; i < n; i++){
+            res = max(res, left[i] + right[i+1]);
+        }
+        return res;
+    }    
 };
