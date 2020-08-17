@@ -1,6 +1,6 @@
 
 
-//!!!! sol2.1 from sol2, bottom-up, O(mn), O(mn), sol2 is enough
+//!!!! sol2.1 from sol2, bottom-up, O(mn), O(n), sol2 is enough
 class Solution {
 public:
     bool isMatch(string s, string p) {
