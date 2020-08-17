@@ -7,10 +7,10 @@ public:
         int m = s.size(), n = p.size();
         vector<int> dp(n+1, 0); // dp[i][j]: ismatch for s[i:], p[j:]
         // dp[i][j] = 
-        // 1. p[j+1] is not *:  dp[i+1][j+1] && (s[i] == p[j] || p[j] == .)
+        // 1. p[j+1] is not *:  s[i] and p[j] should match and then look for dp[i+1][j+1] 
         // 2. p[j+1] is *:
         //    2.1.  * is nothing, dp[i][j+2]
-        //    2.2.  * is replication, dp[i+1][j+2] && (s[i] == p[j] || p[j] == .)
+        //    2.2.  * is replication, s[i] and p[j] should match and then look for dp[i+1][j+2] 
         
         for(int i = m; i >= 0; i--){
             vector<int> dp2(n+1,0);
@@ -26,7 +26,6 @@ public:
             }
             dp = dp2;
         }
-        
         return dp[0];
     }
 };
@@ -42,10 +41,10 @@ public:
         vector<vector<int>> dp(m+1, vector<int> (n+1, 0)); // is match for s[i:], p[j:]
         dp[m][n] = 1; // s[m:] == p[n:] == ""
         // dp[i][j] = 
-        // 1. p[j+1] is not *:  dp[i+1][j+1] && (s[i] == p[j] || p[j] == .)
+        // 1. p[j+1] is not *:  s[i] and p[j] should match and then look for dp[i+1][j+1] 
         // 2. p[j+1] is *:
         //    2.1.  * is nothing, dp[i][j+2]
-        //    2.2.  * is replication, dp[i+1][j+2] && (s[i] == p[j] || p[j] == .)
+        //    2.2.  * is replication, s[i] and p[j] should match and then look for dp[i+1][j+2] 
         
         for(int i = m; i >= 0; i--){
             for(int j = n - 1; j >= 0; j--){
