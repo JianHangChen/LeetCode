@@ -64,6 +64,34 @@ public:
 };
 
 
+//!!! sol1.1, from sol2, top down, O(mn), O(mn)
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        vector<vector<int>> memo(m+1, vector<int> (n+1, -1));
+        return isMatch(0, 0, s, p, memo);
+    }
+    bool isMatch(int i, int j, string& s, string& p, vector<vector<int>>& memo){
+        if(memo[i][j] != -1) return memo[i][j];
+        
+        if(j == p.size()){
+            memo[i][j] = (i == s.size());
+        }
+        else{
+            bool firstmatch = (i < s.size() && (s[i] == p[j] || p[j] == '.'));
+            if(j + 1 < p.size() && p[j+1] == '*'){
+                memo[i][j] = isMatch(i, j+2, s, p, memo) || firstmatch && isMatch(i+1, j, s, p, memo);
+            }
+            else{
+                memo[i][j] = firstmatch && isMatch(i+1, j+1, s, p, memo);
+            }
+        }
+        return memo[i][j];
+    }
+    
+};
+
 
 // // sol1, recursion, cache, O(mn), O(mn)
 class Solution {
