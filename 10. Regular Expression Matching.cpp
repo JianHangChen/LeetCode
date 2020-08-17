@@ -1,66 +1,66 @@
-// !!! sol2.1, O(mn), O(n)
-class Solution{
+
+
+//!!!! sol2.1 from sol2, bottom-up, O(mn), O(mn), sol2 is enough
+class Solution {
 public:
-    bool isMatch(string s, string p){
+    bool isMatch(string s, string p) {
         int m = s.size(), n = p.size();
-        vector<bool> pre(n+1, false);
-        for(int i = 0; i <= m; i++){
-            vector<bool> cur(n+1, false); 
-            if(i == 0) cur[0] = true;
-            for(int j = 1; j <= n; j++){
-                if(p[j - 1] != '*'){
-                    if(i >= 1 && ( s[i-1] == p[j-1] || p[j-1] == '.')){
-                        cur[j] = pre[j-1];
-                    }
+        vector<int> dp(n+1, 0); // dp[i][j]: ismatch for s[i:], p[j:]
+        // dp[i][j] = 
+        // 1. p[j+1] is not *:  dp[i+1][j+1] && (s[i] == p[j] || p[j] == .)
+        // 2. p[j+1] is *:
+        //    2.1.  * is nothing, dp[i][j+2]
+        //    2.2.  * is replication, dp[i+1][j+2] && (s[i] == p[j] || p[j] == .)
+        
+        for(int i = m; i >= 0; i--){
+            vector<int> dp2(n+1,0);
+            if(i == m) dp2[n] = 1;  // s[m:] == p[n:] == ""
+            for(int j = n - 1; j >= 0; j--){
+                bool firstmatch = (i < m) &&  (s[i] == p[j] || p[j] == '.');
+                if(j+1 >= n || p[j+1] != '*'){
+                    dp2[j] = firstmatch && dp[j+1]; 
                 }
-                else{ // p[j-1] is *
-                    if(j == 1) continue;
-                    if(cur[j-2]){
-                        cur[j] = true;
-                    }
-                    else{
-                        if(i >= 1 && (s[i-1] == p[j-2] || p[j-2]=='.') ){
-                            cur[j] = pre[j];
-                        }
-                    }
+                else{ // j < n - 1 && p[j+1] == '*'
+                    dp2[j] = dp2[j+2] || (firstmatch && dp[j]);
                 }
             }
-            pre = cur; 
+            dp = dp2;
         }
-        return pre[n];
-   }        
+        
+        return dp[0];
+    }
 };
 
 
-// // ! sol2, dp, O(mn), O(mn)
-class Solution{
+
+
+//!!!! sol2 from sol2, bottom-up, O(mn), O(mn), use this
+class Solution {
 public:
-    bool isMatch(string s, string p){
+    bool isMatch(string s, string p) {
         int m = s.size(), n = p.size();
-        vector<vector<bool>> dp(m + 1, vector<bool> (n + 1, false));
-        dp[0][0] = true;
-        for(int i = 0; i <= m; i++){
-            for(int j = 1; j <= n; j++){
-                if(p[j - 1] != '*'){
-                    if(i >= 1 && ( s[i-1] == p[j-1] || p[j-1] == '.')){
-                        dp[i][j] = dp[i-1][j-1];
-                    }
+        vector<vector<int>> dp(m+1, vector<int> (n+1, 0)); // is match for s[i:], p[j:]
+        dp[m][n] = 1; // s[m:] == p[n:] == ""
+        // dp[i][j] = 
+        // 1. p[j+1] is not *:  dp[i+1][j+1] && (s[i] == p[j] || p[j] == .)
+        // 2. p[j+1] is *:
+        //    2.1.  * is nothing, dp[i][j+2]
+        //    2.2.  * is replication, dp[i+1][j+2] && (s[i] == p[j] || p[j] == .)
+        
+        for(int i = m; i >= 0; i--){
+            for(int j = n - 1; j >= 0; j--){
+                bool firstmatch = (i < m) &&  (s[i] == p[j] || p[j] == '.');
+                if(j+1 >= n || p[j+1] != '*'){
+                    dp[i][j] = firstmatch && dp[i+1][j+1]; 
                 }
-                else{ // p[j-1] is *
-                    if(j == 1) continue;
-                    if( dp[i][j-2]){
-                        dp[i][j] = true;
-                    }
-                    else{
-                        if(i >= 1 && (s[i-1] == p[j-2]|| p[j-2] == '.')){
-                            dp[i][j] = dp[i-1][j];
-                        }
-                    }
+                else{ // j < n - 1 && p[j+1] == '*'
+                    dp[i][j] = dp[i][j+2] || firstmatch && dp[i+1][j];
                 }
             }
         }
-        return dp[m][n];
-   }        
+        
+        return dp[0][0];
+    }
 };
 
 
@@ -147,5 +147,3 @@ public:
         
     }    
 };
-
-
