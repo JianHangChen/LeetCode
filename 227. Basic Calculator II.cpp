@@ -1,5 +1,53 @@
+//!!!!sol2,  use istringstream
+// O(n), O(n)
+/// from https://www.jiuzhang.com/solution/basic-calculator-ii/#tag-other-lang-cpp
+class Solution{
+public:
+    int calculate(string s){
+        istringstream i(s);
+        vector<long> nums;
+        char op = '+';
+        long val;
+        while(i>>val){
+            if(op == '+') nums.push_back(val);
+            if(op == '-') nums.push_back(-val);
+            if(op == '*') nums.back() *= val;
+            if(op == '/') nums.back() /= val;
+            i >> op;
+        }
+        return accumulate(nums.begin(), nums.end(), 0);
+    }
+};
 
-//!!! from gy2, O(n), O(1)
+//!!!sol1.1 from gy2, O(n), O(m), m is the total number
+class Solution{
+public:
+    int calculate(string s){
+        int n = s.size();
+        vector<long> nums;
+        char op = '+';
+        for(int i = 0; i < n; i++){
+            while(i < n && s[i] == ' ') i++; //remove space
+            long cur = 0;
+            while(i < n && isdigit(s[i])){
+                cur = cur * 10 + s[i++] - '0'; // get the currrent value
+            }
+            // append current value to the array(+-), or execute the operator to the last value
+            if(op == '+') nums.push_back(cur);
+            if(op == '-') nums.push_back(-cur);
+            if(op == '*') nums.back() *= cur;
+            if(op == '/') nums.back() /= cur;
+            
+            while(i < n && s[i] == ' ') i++; // remove space
+            if(i < n) op = s[i];            // get the operator for next computation
+        }
+        return accumulate(nums.begin(), nums.end(), 0);
+    }
+};
+
+
+
+//!!!sol1, from gy2, O(n), O(1)
 class Solution{
 public:
     int calculate(string s){
@@ -23,10 +71,7 @@ public:
                 op = s[i];
                 cur = 0;                
             }
-
         }
         return res;
-        
     }
-    
 };
