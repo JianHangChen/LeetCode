@@ -15,9 +15,9 @@ public:
                 else if(op == '-') pre -= cur;
                 else if(op == '*') pre *= cur;
                 else if(op == '/') pre /= cur;
-                if(s[i] == '+' || s[i] == '-'){
+                
+                if(i == n-1 || s[i] == '+' || s[i] == '-'){
                     res += pre;
-                    if(i == n) break;
                     pre = 0;
                 }
                 op = s[i];
