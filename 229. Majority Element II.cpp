@@ -1,3 +1,4 @@
+// my, O(n), O(1) Boyer-Moore Voting Algorithm
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums){
