@@ -1,6 +1,6 @@
 
 //!!! sol1, very hard, remember it, from ch9 and gy
-// O(n), O(1)
+// O(n), O(1)//https://leetcode.com/problems/rearrange-string-k-distance-apart/discuss/83207/C%2B%2B-unordered_map-priority_queue-solution-using-cache
 // I feel that the running time of this algorithm is O(n). The reason is that the only possible characters in the string are lower case letters, which makes the maximum size of the priority queue 26. We are doing one push and pop from the priority queue for each character in the string, which is O(n * (2 * log(26))). This reduces to O(n).
 // This is similar to how the other array based solution looks like it would be O(n^2), but it is not because they are doing a linear scan of a constant sized array.
 
