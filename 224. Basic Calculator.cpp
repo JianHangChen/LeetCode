@@ -1,4 +1,42 @@
-// !!! sol1, from ch9 or sol2, O(n), O(n)
+// !!! sol2, queue, template could be used in q1, q2, q3
+// O(n), O(n)
+// https://www.youtube.com/watch?v=ICfk--XA02E
+
+class Solution {
+public:
+    int calculate(string s) {
+        queue<char> q;
+        for(char c:s){
+            if(c!=' ') q.push(c);
+        }
+        q.push(' '); // !!! 3+3 add extra ' ' to execute last +
+        return calculate(q); 
+    }
+    int calculate(queue<char>& q){
+        int res = 0,  prev = 0, cur = 0;  // res maintain result, prev maintain operand1, cur maintain operand2
+        char op = '+';
+        while(!q.empty()){
+            char c = q.front(); q.pop();
+            if(c == '(') cur = calculate(q);
+            else if(isdigit(c)){
+                cur = 10 * cur + (c - '0');
+            }
+            else{
+                switch(op){
+                    case '+': res += prev; prev = +cur; break;
+                    case '-': res += prev; prev = -cur; break;
+                }
+                if(c == ')') break;
+                cur = 0;
+                op = c;
+            }
+        }
+        return res + prev; //!!!! remember to execute last one
+    }
+};
+
+
+// ! sol1, from ch9 or sol2, O(n), O(n)
 
 class Solution {
 public:
