@@ -1,6 +1,42 @@
-//!!!!sol2,  use istringstream
+// !!! sol3, queue, template could be used in q1, q2, q3
 // O(n), O(n)
-/// from https://www.jiuzhang.com/solution/basic-calculator-ii/#tag-other-lang-cpp
+// https://www.youtube.com/watch?v=ICfk--XA02E
+class Solution{
+public:
+    int calculate(string s){
+        queue<char> q;
+        for(char c:s){
+            if(c !=' ') q.push(c);
+        }
+        q.push(' ');
+        return cal(q);        
+    }
+    int cal(queue<char>& q){
+        int res = 0, prev = 0, cur = 0;
+        char op = '+';
+        while(!q.empty()){
+            char c = q.front(); q.pop();
+            if(isdigit(c)){
+                cur = cur * 10 + (c - '0');
+            }
+            else{
+                switch(op){
+                    case '+': res += prev; prev = +cur; break;
+                    case '-': res += prev; prev = -cur; break;
+                    case '*': prev *= cur; break;
+                    case '/': prev /= cur; break;
+                }
+                cur = 0;
+                op = c;
+            }            
+        }
+        return res + prev;
+    }
+};
+
+!!sol2,  use istringstream
+O(n), O(n)
+/ from https://www.jiuzhang.com/solution/basic-calculator-ii/#tag-other-lang-cpp
 class Solution{
 public:
     int calculate(string s){
@@ -19,7 +55,7 @@ public:
     }
 };
 
-//!!!sol1.1 from gy2, O(n), O(m), m is the total number
+//!sol1.1 from gy2, O(n), O(m), m is the total number
 class Solution{
 public:
     int calculate(string s){
@@ -47,7 +83,7 @@ public:
 
 
 
-//!!!sol1, from gy2, O(n), O(1)
+//!sol1, from gy2, O(n), O(1)
 class Solution{
 public:
     int calculate(string s){
