@@ -1,4 +1,4 @@
-//my, two pass O(n), O(n)
+//my, two pass O(n), O(n), sol3 is also awesome
 class Solution {
 public:
     string minRemoveToMakeValid(string s) {
