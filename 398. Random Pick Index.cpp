@@ -1,4 +1,4 @@
-// sol2, O(1) build, O(n) for pickup
+// !!! sol2, O(1) build, O(n) for pickup
 // reservoir sampling
 // from gy,  but use vector *_nums = nums to save space;
 // a better story is a large file stream: https://leetcode.com/problems/random-pick-index/discuss/88071/C%2B%2B_Time%3A-O(n)-Space%3A-O(n)_116ms_96.41_with-clear-explanation-by-probability
