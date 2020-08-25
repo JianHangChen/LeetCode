@@ -22,7 +22,7 @@ public:
                     j = j + res[j];
                 }
             }
-        }
+        } 
         return res;        
     }
 };
