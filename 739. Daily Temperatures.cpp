@@ -1,4 +1,8 @@
 // sol2, !!!! true O(n), O(1)
+// skip method
+
+// Yes, it's amortized because each calculation should be O(1) average. The important thing to note is that the moment you traverse a bunch of temperatures to search for the largest temp, you make traversals that can never be crossed again. Any temperature less than the current one will just stop at that, and any temperature larger will still hit that current one and then jump across all the indices you've already traversed. So it's O(2n) total
+// Time Complexity: Even though the number of steps to jump (while loop) is NOT a constant, note that each element in a 'valley' will be accessed at most twice thanks to the leaps (consider the example T=[5,4,5,1,2,3,4,6]), the algorithm essentially only keeps the monotonely increasing part of the original sequence. Thus the complexity is O(n).
 
 class Solution {
 public:
