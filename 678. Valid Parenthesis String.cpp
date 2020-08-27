@@ -1,6 +1,6 @@
 
 
-sol2, !!!, run twice, use count to track the element, O(n), O(1)
+sol2, !!!, run twice, use count to track the element, O(n), O(1) Valid Parenthesis String
 class Solution{
 public:
     bool checkValidString(string s){
