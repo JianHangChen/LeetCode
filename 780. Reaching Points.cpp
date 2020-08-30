@@ -1,4 +1,8 @@
 // sol3, from https://github.com/wisdompeak/LeetCode/tree/master/Recursion/780.Reaching-Points
+// Time Complexity: O(log(max(tx,ty))). The analysis is similar to the analysis of the Euclidean algorithm, and we assume that the modulo operation can be done in O(1)O(1) time.
+
+// Space Complexity: O(1).
+
 class Solution {
 public:
     bool reachingPoints(int sx, int sy, int tx, int ty) {
