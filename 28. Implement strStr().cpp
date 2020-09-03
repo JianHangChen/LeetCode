@@ -1,5 +1,56 @@
 
-#没什么意思的题目
+//!!! sol2, from sol3, rolling hash , O(m), O(1)
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if(needle.empty()) return 0;
+        int m = haystack.size(), n = needle.size();
+        if(m < n) return -1;
+        long long MOD = pow(2,26); // it's a safe number for () * 26, still < LONG LONG_MAX
+        long long hash_needle = 0, hash_hay = 0;
+        
+        for(int i = 0; i < n; i++){
+            hash_hay = (hash_hay * 26 + (haystack[i] - 'a')) % MOD;
+            hash_needle = (hash_needle * 26 + (needle[i]-'a')) % MOD;
+        }
+        
+        if(hash_hay == hash_needle && haystack.substr(0,n) == needle) return 0;        
+        
+        long long pow26 = 1;
+        for(int i = 1; i <= n; i++) pow26 = (pow26 * 26) % MOD;
+        
+        for(int i = 1; i <= m - n; i++){
+            int pre_d = haystack[i-1] - 'a', last_d = haystack[i+n-1] - 'a';
+            hash_hay = ( (hash_hay * 26 + MOD -  pre_d * pow26 % MOD )   + last_d ) % MOD;
+            
+            if(hash_hay != hash_needle) continue;                    
+            if(haystack.substr(i, n) == needle) return i;
+        }
+        return -1;
+    }
+};
+
+
+
+
+
+//! sol1, my, brute force, O(mn), O(1)
+// class Solution {
+// public:
+//     int strStr(string haystack, string needle) {
+//         if(needle.empty()) return 0;
+//         int m = haystack.size(), n = needle.size();
+//         for(int i = 0; i < m; i++){
+//             if(haystack.substr(i, n) == needle) return i;
+//         }
+//         return -1;
+        
+        
+//     }
+// };
+
+
 class Solution:
     def strStr(self, haystack, needle):
         """
