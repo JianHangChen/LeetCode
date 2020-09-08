@@ -1,3 +1,32 @@
+// !!! sol1, dummy, gy3, O(n), O(1)
+class Solution {
+public:
+    Node* connect(Node* root) {
+        Node* dummy = new Node(-1), *cur = dummy, *head = root;
+        while(root){
+            if(root->left){
+                cur->next = root->left;
+                cur = root->left;
+            }
+            if(root->right){
+                cur->next = root->right;
+                cur = root->right;
+            }
+            root = root->next;
+            if(!root){
+                root = dummy->next;
+                dummy->next = NULL;
+                cur = dummy;
+            }
+            
+        }
+        return head;
+        
+    }
+};
+
+
+
 """
 # Definition for a Node.
 class Node:
