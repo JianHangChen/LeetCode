@@ -1,3 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+
+
+// !! my sol2, iteratively, O(n), O(n)
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        TreeNode* a, * b;
+        queue<TreeNode*> q;
+        q.push(root->left);
+        q.push(root->right);
+        while(!q.empty()){
+            a = q.front(); q.pop();
+            b = q.front(); q.pop();
+            if(!a && !b) continue;
+            else if(!a || !b || (a->val != b->val)) return false;
+            else{
+                q.push(a->left);
+                q.push(b->right);
+                q.push(a->right);
+                q.push(b->left);
+            }           
+        }
+        return true;        
+    }
+};
+
+// my, sol1, recursively, O(n), O(n)
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        
+        return compare(root->left, root->right);
+    }
+    
+    bool compare(TreeNode* left, TreeNode* right){
+        if(!left && !right)  return true;
+        if(!left || !right || left->val != right->val) return false;
+        
+        return ( compare(left->left, right->right) && compare(left->right, right->left) );
+        
+    }
+};
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
