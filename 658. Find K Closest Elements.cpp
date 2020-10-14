@@ -1,7 +1,31 @@
+// !!!!! lint code version 460, O(logn+k), O(k)
+// spanning through the pivot point!!!
+class Solution {
+public:
+    vector<int> kClosestNumbers(vector<int>& arr, int x, int k) {
+        vector<int> res;
+        if(k == 0) return res;
+        int n = arr.size();
+        
+        int lb = lower_bound(arr.begin(), arr.end(), x) - arr.begin();
+
+        int i = lb - 1, j = lb;
+        
+        while(res.size() < k){
+            if(i < 0 || j  < n && (x - arr[i]) > (arr[j] - x) ){
+                res.push_back(arr[j++]);
+            }
+            else{
+                res.push_back(arr[i--]);
+            }
+            
+        }
+        return res;
+    }
+};
 
 
-
-// !!!sol1, O(log(n-k) + K), O(k)
+// !!sol1, O(log(n-k) + K), O(k)
 
 // https://leetcode.com/problems/find-k-closest-elements/discuss/106426/JavaC%2B%2BPython-Binary-Search-O(log(N-K)-%2B-K)
 
