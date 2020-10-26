@@ -48,7 +48,7 @@ public:
     }
 };
 
-// sol2, by Binary Indexd Tree (BIT), update O(logn),get O(logn), O(n) space O(n)
+// sol2, by Binary Indexd Tree (BIT), update O(logn),get O(logn) pace O(n)
 // BIT is a relative complicated tree structure, we could use an array bit with size n+1 to store it.
 // the position of bit index is i + 1 respectively
 // when get sum of i, index = i+1, add bit[index] to sum and index -= (index&(-index)) when index > 0
@@ -80,7 +80,7 @@ public:
         int s = 0, index = i + 1;
         while( index > 0){
             s += bit[index];
-            index -= index&(-index);
+            index -= index&(-index); // carefully about bit manipulation has lower priority
         }
         return s;
     }
