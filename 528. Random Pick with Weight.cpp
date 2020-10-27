@@ -1,6 +1,7 @@
 //!!!! sol2, follow up, what if the weight often changes?
 // https://leetcode.com/problems/random-pick-with-weight/discuss/182620/Follow-up%3A-what-if-we-can-change-weights-array
-
+// initialization O(nlogn), O(n)
+// pick O( (logn)^2 )
 class Solution {
 private:
     vector<int> bit, nums;
@@ -30,8 +31,8 @@ public:
         n = w.size();
         nums.resize(n);
         bit.resize(n+1, 0);
-        for(int i = 0; i < n; i++){
-            update(i, w[i]);
+        for(int i = 0; i < n; i++){ //n
+            update(i, w[i]); // logn
             total_w += w[i];
         }
     }
@@ -39,9 +40,9 @@ public:
     int pickIndex(){
         int r = rand() % total_w;
         int l = 0, h = n - 1;
-        while(l < h){
+        while(l < h){ // logn
             int mid = l + (h - l) / 2;
-            int s = getsum(mid);
+            int s = getsum(mid); //logn
             if(r < s){
                 h = mid;                
             }
