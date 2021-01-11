@@ -1,3 +1,59 @@
+//!!! sol4, segment tree, space O(n), build O(n), update O(logn), get O(logn)
+class SegTreeNode{
+public:
+    SegTreeNode* left, *right;
+    int start, end, val;
+    SegTreeNode(int i, int j, int x):start(i), end(j), val(x){
+    }
+};
+class NumArray {
+public:
+    SegTreeNode* segTreeRoot;
+    NumArray(vector<int>& nums) {
+        int n = nums.size();
+        segTreeRoot = buildSegTree(0, n-1, nums);
+    }
+    SegTreeNode* buildSegTree(int left, int right, vector<int>& nums){
+        if(left > right) return NULL;
+        SegTreeNode* root = new SegTreeNode(left, right, nums[left]);
+        if(left == right){
+            return root;
+        }
+        int mid = left + (right - left) / 2;
+        root->left = buildSegTree(left, mid, nums);
+        root->right = buildSegTree(mid+1, right, nums);
+        root->val = root->left->val + root->right->val;
+        return root;        
+    }
+    void update(int i, int val) {
+        update(segTreeRoot, i, val);
+    }
+    void update(SegTreeNode* root, int i, int val){
+        if(root->start == root->end && root->start == i){
+            root->val = val; return;
+        }
+        int mid = root->start + (root->end - root->start) / 2;
+        if(i <= mid){
+            update(root->left, i, val);
+        }
+        else{
+            update(root->right, i, val);
+        }
+        root->val = root->left->val + root->right->val;        
+    }
+    int sumRange(int i, int j) {
+        return sumRange(segTreeRoot, i, j);
+    }
+    int sumRange(SegTreeNode* cur, int i, int j){
+        if(i > cur->end || j < cur->start || i > j) return 0;
+        if(i<= cur->start && cur->end <= j) return cur->val;
+        int mid = cur->start + (cur->end - cur->start) / 2;
+        if(j <= mid) return sumRange(cur->left, i, j);
+        if(i > mid) return sumRange(cur->right, i, j);
+        return sumRange(cur->left, i, mid) + sumRange(cur->right, mid+1, j);
+    }
+};
+
 // sol1,  update(O(sqrt(n)), sum O(sqrt(n))
 // this solution is to separate n into sqrt(n) blocks, when you want to sum for [i,j], 
 // just calculate the related block, block_start, block_end.
