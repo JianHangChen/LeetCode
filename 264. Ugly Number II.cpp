@@ -1,3 +1,27 @@
+O(n), O(n)
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> uglys(1, 1);
+        int i = 0, j = 0, k = 0;
+        for(int t = 1; t < n; t++){
+            int minUgly = min(uglys[i] * 2, min(uglys[j] * 3, uglys[k] * 5));
+            if(minUgly == uglys[i] * 2){
+                i++;
+            }
+            if(minUgly == uglys[j] * 3){
+                j++;
+            }
+            if(minUgly == uglys[k] * 5){
+                k++;
+            }
+            uglys.push_back(minUgly);
+        }
+        return uglys.back();
+    }
+};
+
+
 class Solution:
 
 
