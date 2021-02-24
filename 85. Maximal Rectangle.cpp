@@ -8,14 +8,8 @@ public:
         int res = 0;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
-                if(i == 0){
-                    if(matrix[i][j] == '1') h[j] = 1;
-                    else h[j] = 0;
-                }
-                else{
-                    if(matrix[i][j] == '1') h[j] = h[j]+1;
-                    else h[j] = 0;
-                }
+                if(matrix[i][j] == '1') h[j] = h[j]+1;
+                else h[j] = 0;
             }
             res = max(res, maxHistogram(h));
         }
@@ -39,7 +33,6 @@ public:
         }
         return res;
     }
-    
 };
 
 //sol1, my, use monotone stack for max rectangle histogram 
