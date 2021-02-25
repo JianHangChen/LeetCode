@@ -39,9 +39,7 @@ public:
                     next[i] = j;
                     break;
                 }
-                else{
-                    j = next[j];
-                }
+                j = next[j];
             }            
         }
         
