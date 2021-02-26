@@ -66,7 +66,30 @@ public:
 //     }
 // };
 
-// // !!! sol2, binary search, O(logn), O(1) , error easily
+
+// // !!!!! sol2.1, binary search, O(logn), O(1) , error easily
+// find a^2 <= x < (a+1)^2
+class Solution {
+public:
+    int mySqrt(int x) {
+        long long l = 0, h = x;
+        h++;
+        while(true){
+            long long mid = l + (h - l) / 2;
+            if(mid * mid == x) return mid;
+            else if(mid * mid > x){
+                h = mid - 1;
+            }
+            else{
+                if((mid + 1) * (mid + 1) > x) return mid;
+                l = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
+
+// // ! sol2, binary search, O(logn), O(1) , error easily
 class Solution {
 public:
     int mySqrt(int x) {
