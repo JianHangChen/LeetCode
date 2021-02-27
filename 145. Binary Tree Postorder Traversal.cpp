@@ -1,3 +1,27 @@
+// !!! iteratively. O(n), O(n)
+// https://leetcode.com/problems/binary-tree-postorder-traversal/discuss/45551/Preorder-Inorder-and-Postorder-Iteratively-Summarization 
+ 
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        stack<TreeNode*> st;
+        while(root || !st.empty()){
+            if(root){
+                res.push_back(root->val);
+                if(root->left) st.push(root->left);
+                root = root->right;
+            }
+            else{
+                root = st.top(); st.pop();
+            }
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
