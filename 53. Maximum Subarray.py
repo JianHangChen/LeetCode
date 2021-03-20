@@ -1,3 +1,41 @@
+// !!! sol2, my, O(n), O(1)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int res = nums[0];
+        int dp = nums[0];
+        for(int i = 1; i < n; i++){
+            if(dp < 0) dp = nums[i];
+            else dp = dp + nums[i];
+            res = max(res, dp);
+        }
+        return res;
+        
+    }
+};
+
+// !!! sol1, my, O(n), O(n)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n); // include i, what is the max subarray [0, i]
+        int res = INT_MIN;        
+        for(int i = 0; i < n; i++){
+            if(i == 0 || dp[i-1] < 0){
+                dp[i] = nums[i];
+            }
+            else{
+                dp[i] = dp[i-1] + nums[i];
+            }
+            res = max(res, dp[i]);
+        }
+        return res;
+    }
+};
+
+
 class Solution:
     def maxSubArray(self, nums):
         """
