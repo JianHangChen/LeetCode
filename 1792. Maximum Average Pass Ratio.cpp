@@ -9,14 +9,14 @@ public:
     double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
         vector<array<double, 3> > triple;
         double total = 0;
-        for(auto& c:classes){
+        for(auto& c:classes){ // O(k)
             double x = c[0], y = c[1];
             total += x / y;
             triple.push_back( {diff(x, y), x, y });
         }     
         
-        priority_queue<array<double,3>> pq(triple.begin(), triple.end());
-        while(extraStudents){
+        priority_queue<array<double,3>> pq(triple.begin(), triple.end()); // O(k)
+        while(extraStudents){ // nlogk
             auto a = pq.top(); pq.pop();
             total += a[0];
             double x = a[1] + 1, y = a[2] + 1;
