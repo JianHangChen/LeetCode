@@ -1,20 +1,88 @@
-// !!! sol1, my, same as gy, O(n), O(n)
+//!! sol2.1, O(sqrt(n)log(logn)), O(n)
 class Solution {
 public:
     int countPrimes(int n) {
-        vector<bool> exist(n+1, false);
-        int count = 0;
-        for(int i = 2; i < n; i++){
-            if(!exist[i]){
-                count++;
+        if(n <= 2) return 0;
+        vector<bool> isPrime(n, true);
+        int notPrime = 0;
+        for(int i = 2; i * i < n; i++){
+            if(isPrime[i]){
                 for(int j = 2; i * j < n; j++){
-                    exist[i * j] = true;
+                    if(isPrime[i*j]){
+                        isPrime[i * j] = false;
+                        notPrime++;
+                    }
                 }
-                
             }
         }
-        return count;
-        
+        return n-2 - notPrime;
+    }
+};
+
+
+
+// 2 3 4 5 6 7 8 9 10 11 12 13
+// 2 3 x 5 x   x   x   
+
+// 10
+// 3 x 3  = 9
+
+//!!! sol2, O(nlog(logn)), O(n)
+// analysis https://leetcode.com/problems/count-primes/discuss/473021/Time-Complexity-O(log(log(n)
+class Solution {
+public:
+    int countPrimes(int n) {
+        vector<bool> isprime(n, true);
+        int res = 0;
+        for(int i = 2; i < n; i++){
+            if(isprime[i]){
+                res++;
+                for(int j = 2; i * j < n; j++){
+                    isprime[i * j] = false;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+
+!sol1.1, isprime, O((nsqrt(n))), O(1)
+class Solution {
+public:
+    int countPrimes(int n) {
+        int res = 0;
+        for(int i = 2; i < n; i++){
+            if(isprime(i)) res++;
+        }
+        return res;
+    }
+    bool isprime(int i){
+        for(int j = 2; j * j <= i; j++){
+            if(i % j == 0) return false;
+        }
+        return true;
+    }
+    
+};
+
+
+sol1, brute force, O((n^2)), O(n)
+class Solution {
+public:
+    int countPrimes(int n) {
+        vector<int> primes;
+        for(int i = 2; i < n; i++){
+            int j = 0;
+            while(j < primes.size()){
+                if(i % primes[j] == 0) break;
+                j++;
+            }
+            if(j == primes.size()){
+                primes.push_back(i);
+            }
+        }
+        return primes.size();
     }
 };
 
