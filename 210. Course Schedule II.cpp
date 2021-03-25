@@ -29,7 +29,6 @@ public:
         
         unordered_set<int> t(s);
         for(int cur:s){
-            cout << cur <<endl;
             t.erase(cur);
             path.push_back(cur);
             for(int nei:nextCourse[cur]){
@@ -69,8 +68,6 @@ int main(){
     
     return -1;
 }
-
-
 
 // sol1, my bfs, O(E+V), O(E+V)
 // [0, 1] 1->0
