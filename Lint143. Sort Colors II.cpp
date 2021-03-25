@@ -11,17 +11,10 @@ public:
         if(start >= end) return;
 
         int pivot = partition(colors, start, end);
-        if(pivot == -1) return; // check if the array from start to end is identical
-        sortcolor(colors, start, pivot);
+        sortcolor(colors, start, pivot-1);
         sortcolor(colors, pivot+1, end);
     }
     int partition(vector<int> &colors, int start, int end){
-        int i = start;
-        while(i <= end){
-            if(i == end) return -1;
-            if(colors[i] != colors[i+1]) break;
-            i++;
-        }
 
         int tmp = start + rand() % (end - start + 1);
         swap(colors[start], colors[tmp]);
