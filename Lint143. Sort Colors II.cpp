@@ -1,18 +1,62 @@
 class Solution {
 public:
-    //sol2 selection sort, nlogn
+    //!!!sol2 selection sort, nlogn
     // divide and conquer
     void sortColors2(vector<int> &colors, int k) {
-        sortcolor(colors, 0, colors.size() - 1, 1, k);
+        sortcolor(colors, 0, colors.size() - 1);
     }
+
+
+    void sortcolor(vector<int> &colors, int start, int end){
+        if(start >= end) return;
+
+        int pivot = partition(colors, start, end);
+        if(pivot == -1) return; // check if the array from start to end is identical
+        sortcolor(colors, start, pivot);
+        sortcolor(colors, pivot+1, end);
+    }
+    int partition(vector<int> &colors, int start, int end){
+        int i = start;
+        while(i <= end){
+            if(i == end) return -1;
+            if(colors[i] != colors[i+1]) break;
+            i++;
+        }
+
+        int tmp = start + rand() % (end - start + 1);
+        swap(colors[start], colors[tmp]);
+
+        int mincolor = INT_MIN, maxcolor = INT_MAX;
+        int l = start + 1, r = end, val = colors[start];
+        while(l <= r){
+            if(colors[l] > val && colors[r] <= val){
+                swap(colors[l++], colors[r--]);
+            }
+            else if(colors[l] <= val){
+                l++;
+            }
+            else{ // colors[r] >val
+                r--;
+            }
+        }
+        swap(colors[start], colors[r]);
+        return r;
+    }
+
+
     // k = 4
     // [3,2,2,1,4] 
     // mid = 1 + 3/2 = 2
     // [1,2,2,4,3]
     // 
 
+    // !!! sol2.1 using color number bound, nlogn, partition sort
     void sortcolor(vector<int>& colors, int start, int end, int small, int large){
-        if(small == large) return;
+
+        if(start >= end || small >= large) return;
+
+        // pivot -> index [ xxxxx| ]
+        // mid -> val []
         int mid = small + (large - small) / 2;
         int a = start, b = end, i = a;
         while(i <= b){
@@ -33,10 +77,10 @@ public:
         for(int i = 0; i < n; i++){
             int color = colors[i];
             if(color < 0) continue;
-            int idx = color - 1;
+            int idx = color - 1; // 4th
             if(colors[idx] > 0){
                 swap(colors[idx], colors[i]);
-                colors[idx] = -1;
+                colors[idx] = -1; //-1 means 1 color
                 i--;
             }
             else{
@@ -44,6 +88,7 @@ public:
                 colors[idx]--;
             }
         }
+        // [1 ...k, .....  ]
         int j = n - 1;
         for(int i = k - 1; i >= 0; i--){
             int count = -colors[i];
@@ -52,10 +97,10 @@ public:
                 count--;
             }
         }
-
-
     }
-    
+    // [-1, -1, -1, 0, -2]
+    // k <= n
+
     // 3  2  2  1  4
     // -1 -2 -1 -1 0
     // -1 2 2 3 4
