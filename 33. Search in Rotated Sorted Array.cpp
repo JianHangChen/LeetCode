@@ -1,4 +1,5 @@
 
+
 // !!! form sol2, O(logn), same as gy2
 // check the "direction" of the part [i, mid]
 // if [i, mid] is sorted, then if the target is in [i, mid], the search space is i, mid - 1
@@ -8,7 +9,7 @@
 // so [mid, j] is sorted, then if the target is in [mid, j], then the search space is mid+ 1, j
 //                               if the target is not in [mid, j], then either it is bigger than nums[j], or smaller than nums[mid], those case locate in [i, mid-1]
 
-
+// follow-up: how about repeated number in the array
 
 class Solution {
 public:
@@ -17,7 +18,10 @@ public:
         while(i <= j){
             int mid = i + (j - i) / 2;
             if(nums[mid] == target) return mid;
-            else if(nums[i] <= nums[mid]){
+            if(nums[i] == nums[mid]){
+                i++; // follow up
+            }
+            else if(nums[i] < nums[mid]){
                 if( nums[i] <= target && target < nums[mid]) j = mid - 1;
                 else i = mid + 1;
             }
