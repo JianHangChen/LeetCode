@@ -1,3 +1,31 @@
+// sol3, floyd warshall, O(n^3), O(n^2)
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<vector<int>> dist(n+1, vector<int> (n+1, INT_MAX));
+        for(int i = 1; i <= n; i++) dist[i][i] = 0;
+        for(auto& time:times){
+            int u = time[0], v = time[1], w = time[2];
+            dist[u][v] = w;
+        }
+        for(int t = 1; t <= n; t++){
+            for(int i = 1; i <= n; i++){
+                for(int j = 1; j <= n; j++){
+                    if(dist[i][t] != INT_MAX && dist[t][j] != INT_MAX // CAREFULL!! OVERFLOW
+                       && dist[i][j] > dist[i][t] + dist[t][j]){
+                        dist[i][j] = dist[i][t] + dist[t][j];
+                    }
+                }
+            }
+        }
+        int res = 0;
+        for(int i = 1; i <= n; i++){
+            if(dist[k][i] == INT_MAX) return -1;
+            res = max(res, dist[k][i]);
+        }
+        return res;
+    }
+};
 
 
 // !! sol2.1 bellman ford, O(EV), O(V)
