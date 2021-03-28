@@ -1,3 +1,29 @@
+
+
+// !! sol2.1 bellman ford, O(EV), O(V)
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<int> distance(n+1, INT_MAX);
+        distance[k] = 0;
+        int res = 0;
+        for(int i = 0; i < n; i++){
+            for(auto& time:times){
+                int u = time[0], v = time[1], w = time[2];
+                if(distance[u] != INT_MAX && distance[v] > distance[u] + w){
+                    distance[v] = distance[u] + w;  //!!! sometimes carefull about INT_MAX + number;
+                }
+            }    
+        }
+        for(int i = 1; i <= n; i++){
+            if(distance[i] == INT_MAX) return -1;
+            res = max(res, distance[i]);
+        }
+        
+        return res;
+    }
+};
+
 // sol2, bellman-ford with queue, O(EV) worst case, average O(E+V), O(V)
 
 class Solution{
