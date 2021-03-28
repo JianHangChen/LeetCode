@@ -72,7 +72,7 @@ public:
 
         priority_queue<vector<int>, vector<vector<int>>, CMP> pq;
         
-        pq.push({K, 0});x
+        pq.push({K, 0});
         
         while(!pq.empty()){
             int v = pq.top()[0]; pq.pop();
