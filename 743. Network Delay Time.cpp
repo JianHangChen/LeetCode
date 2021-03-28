@@ -62,7 +62,7 @@ public:
         vector<bool> visited (N+1, false);
         
         unordered_map<int, vector< pair<int, int> > > edges;        
-        for(auto time:times){
+        for(auto& time:times){
             edges[time[0]].push_back( {time[1], time[2]} );
         }
         
@@ -79,7 +79,7 @@ public:
             if(visited[v]) continue;
             visited[v] = true;
             
-            for(auto edge: edges[v]){
+            for(auto& edge: edges[v]){
                 int u = edge.first, w = edge.second;
                 if(distTo[u] > distTo[v] + w){
                     distTo[u] = distTo[v] + w;
