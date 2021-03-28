@@ -1,3 +1,76 @@
+// ! sol4.1, optimized bfs, dijikstra, O(KE), O(v^2)
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        vector<int> dist(n, INT_MAX);
+        dist[src] = 0;
+        vector<vector<vector<int>>> edges(n); 
+        for(auto& flight:flights){
+            int u = flight[0], v = flight[1], w = flight[2];
+            edges[u].push_back({v, w});            
+        }
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>> > q;
+        q.push({0, src});
+        
+        while(!q.empty() && K >= 0){
+            priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>> > qNew;
+            for(int t = q.size(); t > 0; t--){
+                auto cur = q.top(); q.pop();
+                int d = cur[0], u = cur[1];
+                for(auto& edge:edges[u]){
+                    int v = edge[0], w = edge[1];
+                    if(d + w < dist[v]){
+                        dist[v] = d + w;
+                        qNew.push({dist[v], v});
+                    }
+                }
+            }
+            q = qNew;
+            K--;
+        }
+        if(dist[dst] == INT_MAX) return -1;
+        return dist[dst];
+        
+    }
+};
+
+
+// !!!!! sol4,  my, bfs, O(KE), O(V^2)
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        vector<int> dist(n, INT_MAX);
+        dist[src] = 0;
+        vector<vector<vector<int>>> edges(n); 
+        for(auto& flight:flights){
+            int u = flight[0], v = flight[1], w = flight[2];
+            edges[u].push_back({v, w});            
+        }
+        queue<vector<int>> q;
+        q.push({src, 0});
+        
+        while(!q.empty() && K >= 0){
+            for(int t = q.size(); t > 0; t--){
+                auto cur = q.front(); q.pop();
+                int u = cur[0], d = cur[1];
+                for(auto& edge:edges[u]){
+                    int v = edge[0], w = edge[1];
+                    if(d + w < dist[v]){
+                        dist[v] = d + w;
+                        q.push({v, dist[v]});
+                    }
+                }
+            }
+            K--;
+        }
+        if(dist[dst] == INT_MAX) return -1;
+        return dist[dst];
+        
+    }
+};
+
+
+
 //sol3, !!! bellman ford O(K*E), O(n)
 
 class Solution {
