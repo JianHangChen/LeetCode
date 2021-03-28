@@ -1,3 +1,62 @@
+
+// sol3, dijkstra, O(mnlogmn), O(mn)
+struct Point{
+    int x, y, d;
+    string path;
+    Point(int i, int j, int dist, string p):x(i), y(j), d(dist), path(p){
+    }
+};
+
+struct CMP{
+    bool operator()(Point& a, Point& b){
+        if(a.d == b.d) return a.path > b.path;
+        return a.d > b.d;
+    }
+};
+
+class Solution {
+private:
+    int m, n;
+    vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    string dirc = "rldu";
+public:
+    string findShortestWay(vector<vector<int>>& maze, vector<int>& ball, vector<int>& hole) {
+        m = maze.size(); n = maze[0].size();
+        
+        vector<vector<bool>> visited(m, vector<bool> (n, false));
+        priority_queue<Point, vector<Point>, CMP> pq;
+        
+        auto pball = Point(ball[0], ball[1], 0, "");
+        pq.push(pball);
+        
+        while(!pq.empty()){
+            Point cur = pq.top(); pq.pop();
+            if(visited[cur.x][cur.y]) continue;
+            visited[cur.x][cur.y] = true;            
+            if(cur.x == hole[0] && cur.y == hole[1]) return cur.path;
+            
+            for(int i = 0; i < 4; i++){
+                int x = cur.x, y = cur.y, d = cur.d;
+                string path = cur.path + dirc[i];
+                char dx = dirs[i][0], dy = dirs[i][1];
+                
+                while(valid( x + dx, y + dy, maze)){
+                    x += dx; y += dy;
+                    d++;
+                    if(x == hole[0] && y == hole[1]) break;
+                }
+                pq.push(Point(x, y, d, path));
+            }
+        }
+        return "impossible";
+
+    }
+    bool valid(int x, int y, vector<vector<int>>& maze){
+        if(x < 0 || x >= m || y < 0 || y >= n || maze[x][y] == 1) return false;
+        return true;
+    }
+};
+
 // !!! sol2, bfs, O(mn* max(m,n)), O(mn)
 
 class Solution{
@@ -33,9 +92,9 @@ public:
                     paths[x_][y_] = path;
                     if(!(x_==hole[0] && y_==hole[1])) q.push({x_,y_});
                 }
-                else if(distance[x_][y_] == dist){
-                    if(path < paths[x_][y_]){
-                        paths[x_][y_] = path;
+                else if(distance[x_][y_] == dist){ 
+                    if(path < paths[x_][y_]){ // should update path even if dist == distance[x_][y_], use a better path
+                        paths[x_][y_] = path; 
                         if(!(x_==hole[0] && y_==hole[1])) q.push({x_,y_});
                     }
                 }
