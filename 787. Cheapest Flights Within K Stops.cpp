@@ -75,45 +75,40 @@ public:
 
 class Solution {
 public:
-  int findCheapestPrice(int n, vector< vector<int> >& flight, int src, int dst, int K){
-
-    vector<int> bf(n, 1e9), new_bf;
-    bf[src] = 0;
-    
-    
-
-    for(int i = 1; i <= K+1; i++){
-      new_bf = bf;
-
-      for(auto f:flight){
-        new_bf[f[1]] = min( bf[f[0]] + f[2], new_bf[f[1]]);
-      }
-      bf = new_bf;
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        vector<int> dist(n, 1e9);
+        dist[src] = 0;
+        
+        for(int i = 1; i <= K + 1; i++){
+            vector<int> newDist = dist;
+            for(auto& e:flights){
+                int u = e[0], v = e[1], w = e[2];         
+                newDist[v] = min(dist[u] + w, 
+                                 min(newDist[v], dist[v]));
+            }
+            dist = newDist;
+        }
+        return dist[dst] == 1e9 ? -1 : dist[dst];
     }
-    return bf[dst] == 1e9 ? -1 : bf[dst];
-  }
 };
-
     
 
 //sol2, !!! bellman ford O(K*E), O(n*E)
 class Solution {
 public:
-  int findCheapestPrice(int n, vector< vector<int> >& flight, int src, int dst, int K){
-    vector<vector<int>> bf(K+2, vector<int> (n, 1e9));
-
-    bf[0][src] = 0;
-
-    for(int i = 1; i <= K+1; i++){
-      bf[i][src] = 0;
-
-      for(auto f:flight){
-        bf[i][f[1]] = min( bf[i-1][f[0]] + f[2], bf[i][f[1]]);
-      }
-
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        vector<vector<int>> dist(K+2, vector<int> (n, 1e9));
+        dist[0][src] = 0;
+        
+        for(int i = 1; i <= K + 1; i++){
+            for(auto& e:flights){
+                int u = e[0], v = e[1], w = e[2];         
+                dist[i][v] = min(dist[i-1][u] + w, 
+                                 min( dist[i][v], dist[i-1][v]));
+            }
+        }
+        return dist[K+1][dst] == 1e9 ? -1 : dist[K+1][dst];
     }
-    return (bf[K+1][dst] == 1e9) ? -1 : bf[K+1][dst];
-  }
 };
 
 
