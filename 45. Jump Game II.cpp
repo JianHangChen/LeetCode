@@ -1,5 +1,30 @@
-//!!! sol3, greedy, from sol, O(n), O(1)
 
+
+//!!!!!! sol3.1, greedy, from sol, O(n), O(1)
+// can solve unreachble array problem
+class Solution{
+public:
+    int jump(vector<int>& nums){
+        int n = nums.size();
+        if(n == 1) return 0;
+        int step = 1;
+        int premax = nums[0], curmax = nums[0];
+        
+        for(int i = 1; i < n; i++){
+            if(i > premax){
+                step++; 
+                if(premax == curmax) return -1; // if pre_max == cur_max, that's not moving!! false 
+                premax = curmax; 
+            }
+            if(premax >= n - 1) break;
+            curmax = max(curmax, i + nums[i]);
+            
+        }
+        return step;        
+    }
+};
+
+!!! sol3, greedy, from sol, O(n), O(1)
 class Solution{
 public:
     int jump(vector<int>& nums){
@@ -9,7 +34,7 @@ public:
         for(int i = 1; i < n; i++){
             if(i > pre_max){
                 steps++;
-                pre_max = cur_max; // if pre_max == cur_max, that's not moving!! false 
+                pre_max = cur_max; 
             }
             cur_max = max(cur_max, i + nums[i]);
         }
@@ -17,6 +42,9 @@ public:
         
     }
 };
+
+
+
 
 
 sol2, my, bfs, tle, O(n^2)
@@ -52,6 +80,24 @@ public:
     }    
 };
 
+
+
+! sol1.1, my dp, O(n^2), O(n), better
+class Solution{
+public:
+    int jump(vector<int>& nums){
+        int n = nums.size();
+        vector<int> dp(n, INT_MAX);
+        dp[0] = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j <= i + nums[i] && j < n; j++){
+                dp[j] = min(dp[j], dp[i] + 1);
+            }
+        }
+        
+        return dp[n-1];
+    }
+};
 
 sol1, my, dp, O(n^2), O(n), tle
 
