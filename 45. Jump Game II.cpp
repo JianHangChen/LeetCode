@@ -1,30 +1,34 @@
 
 
-//!!!!!! sol3.1, greedy, from sol, O(n), O(1)
-// can solve unreachble array problem
+// //!!!!!! sol3.1, greedy, from sol, O(n), O(1)
+// // can solve unreachble array problem
+
+// case 1: [3]
+// case 2: [3 1]
+// case 3: [2, 3, 1, 1, 4]
+// case 4: [2 1 0 1]
+
 class Solution{
 public:
     int jump(vector<int>& nums){
         int n = nums.size();
-        if(n == 1) return 0;
-        int step = 1;
-        int premax = nums[0], curmax = nums[0];
-        
-        for(int i = 1; i < n; i++){
-            if(i > premax){
-                step++; 
-                if(premax == curmax) return -1; // if pre_max == cur_max, that's not moving!! false 
-                premax = curmax; 
+        int pre = 0, cur = 0, step = 0;
+        for(int i = 0; i < n; i++){
+            if(i > pre){
+                step++;
+                if(pre == cur) return -1; // if pre_max == cur_max, that's not moving!! false 
+                pre = cur;
             }
-            if(premax >= n - 1) break;
-            curmax = max(curmax, i + nums[i]);
+            if(pre >= n - 1) break;
             
+            cur = max(cur, i + nums[i]);
         }
-        return step;        
+        return step;
+
     }
 };
 
-!!! sol3, greedy, from sol, O(n), O(1)
+// !!! sol3, greedy, from sol, O(n), O(1)
 class Solution{
 public:
     int jump(vector<int>& nums){
