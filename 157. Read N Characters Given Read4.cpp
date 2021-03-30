@@ -18,6 +18,30 @@ public:
     }
 };
 
+// !!!!!!! sol1.1, revised to for loop, O(n), O(4), use extra buf4
+class Solution {
+public:
+    /**
+     * @param buf Destination buffer
+     * @param n   Number of characters to read
+     * @return    The number of actual characters read
+     */
+    int read(char *buf, int n) {
+        char buf4[4];
+        int ibuf4 = 0, buf4len = 0;
+        for(int i = 0; i < n; i++){
+            if(buf4len == 0){
+                buf4len = read4(buf4);
+                ibuf4 = 0;
+                if(buf4len == 0) return i;
+            }
+            buf[i] = buf4[ibuf4++];
+            buf4len--;
+        }
+        return n;
+    }
+};
+
 // sol1, my, O(n), O(4), using extra buf4 to store tmp result
 class Solution {
 public:
