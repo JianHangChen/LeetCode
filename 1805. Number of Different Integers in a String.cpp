@@ -16,7 +16,7 @@ public:
                     cur.push_back(word[i]);
                     i++;
                 }
-                s.insert(cur);
+                s.insert(cur); // if all zero, we use "" refer to "0"
                 cur = "";
             }
             else{
