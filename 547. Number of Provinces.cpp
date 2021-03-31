@@ -1,3 +1,4 @@
+
 // sol1, my, same as sol3 but path compression
 // O(N^2), O(N) amortized find
 class Solution {
@@ -14,12 +15,12 @@ public:
                 }
             }
         }
-        unordered_set<int> s;
         
+        int res = 0;
         for(int i = 0; i < n; i++){
-            s.insert(find(i));
+            if(find(i) == i) res++;
         }
-        return s.size();
+        return res;
     }
     
     unordered_map<int, int> parent;
@@ -38,3 +39,4 @@ public:
 // 1 1 0
 // 1 1 0
 // 0 0 1
+
