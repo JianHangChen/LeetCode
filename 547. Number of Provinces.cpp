@@ -4,7 +4,6 @@ class Solution {
 public:
     int findCircleNum(vector<vector<int>>& isConnected) {
         int n = isConnected.size();
-        int count = 1;
         
         for(int i = 0; i < n; i++) parent[i] = i;
         
