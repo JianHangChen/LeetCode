@@ -1,3 +1,107 @@
+// followup:
+// matrix grid is large and sparce
+
+class Solution {
+public:
+    int m, n;
+    vector<vector<int>> dirs = {{0,1}, {0,-1}, {1,0}, {-1, 0}};
+    int numIslands(vector<vector<char>>& grid) {
+        m = grid.size(); n = grid[0].size();
+        set<vector<int>> s; // use unordered_set is better but no such constructor
+        vector<vector<int>> v;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == '1'){
+                    s.insert({i, j});
+                    v.push_back({i, j});
+                }
+            }
+        }
+        int count = 0;
+        queue<vector<int>> q;
+        for(auto& p:v){
+            if(s.count(p) != 0){
+                count++;
+                s.erase(p);
+                q.push(p);
+                while(!q.empty()){
+                    int i = q.front()[0], j = q.front()[1]; q.pop();
+                    for(auto& dir:dirs){
+                        int x = i + dir[0], y = j + dir[1];
+                        if(isvalid(x, y, s)){
+                            s.erase({x, y});
+                            q.push({x, y});
+                        }
+                    }                    
+                }
+            }
+        }
+        return count;
+    }
+    bool isvalid(int x, int y, set<vector<int>>& s){
+        if(x < 0 || x >= m || y < 0 || y >= n || s.count({x, y}) == 0) return false;
+        return true;
+    }
+};
+
+// followup:
+// union find, O(mn), O(number of '1')
+// matrix grid is large and sparce
+// https://leetcode.com/problems/number-of-islands/discuss/640295/Optimized-by-memory-(follow-up-question-what-if-matrix-is-too-big)
+
+class Solution {
+public:
+    int m, n;
+    vector<vector<int>> dirs = {{0,1}, {0,-1}, {1,0}, {-1, 0}};
+    int numIslands(vector<vector<char>>& grid) {
+        m = grid.size(); n = grid[0].size();
+        
+        vector<char> firstR, secondR;
+        
+        for(int i = 0; i < m; i++){
+            secondR = readR(i, grid);
+            for(int j = 0; j < n; j++){
+                int idx = getidx(i, j);
+                if(secondR[j] == '1'){
+                    parent[idx] = idx; // not as good as the discussion
+                    if(i > 0 && firstR[j] == '1'){
+                        uni(idx, getidx(i - 1, j));
+                    }
+                    if(j > 0 && secondR[j-1] == '1'){
+                        uni(idx, getidx(i, j - 1));
+                    }                    
+                }
+            }
+            firstR = secondR;
+        }
+        
+        int count = 0;
+        for(auto& item:parent){
+            if(item.first == item.second) count++;
+        }
+        return count;
+        
+    }
+    int getidx(int i, int j){
+        return i * n + j;
+    }
+    
+    unordered_map<int, int> parent;
+    int find(int i){
+        if(parent[i] == i) return i;
+        parent[i] = find(parent[i]);
+        return parent[i];
+    }
+    void uni(int i, int j){
+        parent[find(i)] = parent[find(j)];
+    }
+    
+    vector<char> readR(int i, vector<vector<char>>& grid){
+        return grid[i];        
+    }
+    
+};
+
 // !!! sol1, my bfs, O(mn), O(min(m,n)) 
 // the complexity analysis , fill with 1, run an example in a paper.
 class Solution {
