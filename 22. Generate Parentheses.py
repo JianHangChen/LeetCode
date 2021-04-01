@@ -1,3 +1,29 @@
+//!!! sol1, my backtracking, O( C(2n, n) / (n+1) ), around O(4^n / sqrt(n)), O(4^n/sqrt(n))
+class Solution {
+public:
+    vector<string> res;
+    vector<string> generateParenthesis(int n){       
+        string path = "";
+        dfs(path, n, n);
+        return res;
+    }
+    void dfs(string path, int left, int right){ // left left, and right left
+        if(left > right) return;
+        if(left == 0 && right == 0){
+            res.push_back(path);
+            return;
+        }
+        
+        if(left > 0){
+            dfs(path + '(', left-1, right);
+        }
+        if(right > 0){
+            dfs(path + ')', left, right-1);
+        }
+    }
+};
+
+
 class Solution:   
     # sol1, brute force, check balance in real time
     
