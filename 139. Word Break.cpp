@@ -1,3 +1,61 @@
+// sol2.2, dp with trie
+class Solution {
+private:
+    struct tNode{
+        tNode* next[26];
+        bool exist = false;
+    };
+    tNode* root;
+    void buildTrie(vector<string>& wordDict){
+        root = new tNode();
+        for(auto& w:wordDict){
+            insert(w);
+        }
+    }
+    
+    void insert(string& word){
+        tNode* cur = root;
+        for(char c:word){
+            if(cur->next[c-'a'] == NULL){
+                cur->next[c-'a'] = new tNode();
+            }
+            cur = cur->next[c-'a'];
+        }
+        cur->exist = true;
+    }
+    bool search(const string& word){
+        tNode* cur = root;
+        for(char c:word){
+            if(cur->next[c-'a'] == NULL){
+                return false;
+            }
+            cur = cur->next[c-'a'];
+        }
+        return cur->exist;
+    }
+    
+    
+public:
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        buildTrie(wordDict);
+        
+        int n = s.size();
+        vector<bool> dp(n+1); // dp[i] is for length i, can this string s[0:i-1] break into wordDict
+        dp[0] = true;
+        // dp[1] = dp[0] && str(0, 1) inside dict
+        // dp[2] = dp[0] && str(0, 2) insde dict || dp[1] && str(1, 1) insde dict
+        // dp[i] = dp[0] && str(0, i) inside dict || dp[1] && str(1, i - 1) insde dict || ... || dp[i-1] && str(i-1, 1) 
+        for(int i =1 ; i <= n; i++){
+            for(int j = 0; j < i; j++){
+                dp[i] = dp[i] || dp[j] && search(s.substr(j, i - j));
+            }
+        }
+        return dp[n];
+
+    }
+};
+
 
 
 //! sol2.1, DP, jump, doesn't need hash, from happygirl, O(n^3), O(n)
@@ -24,29 +82,31 @@ public:
 };
 
 
-// //! sol2, DP, from happygirl
+// // //! sol2, DP, from happygirl && lai
+// O(n^3), O(n)
+
 
 class Solution {
 public:
-    int l = 0;
+    
     bool wordBreak(string s, vector<string>& wordDict) {
-        unordered_set<string> wordset(wordDict.begin(), wordDict.end());
+        unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
         int n = s.size();
-        vector<bool> dp(n+1, false);
+        vector<bool> dp(n+1); // dp[i] is for length i, can this string s[0:i-1] break into wordDict
         dp[0] = true;
-        for(int lo = 0; lo < n; lo++){
-            if(!dp[lo]) continue;
-            for(int hi = lo + 1; hi <= n; hi++){
-                if(dp[hi]) continue;
-                string word = s.substr(lo, hi - lo);
-                if(wordset.count(word) > 0){
-                    dp[hi] = true;
-                }
+        // dp[1] = dp[0] && str(0, 1) inside dict
+        // dp[2] = dp[0] && str(0, 2) insde dict || dp[1] && str(1, 1) insde dict
+        // dp[i] = dp[0] && str(0, i) inside dict || dp[1] && str(1, i - 1) insde dict || ... || dp[i-1] && str(i-1, 1) 
+        for(int i =1 ; i <= n; i++){
+            for(int j = 0; j < i; j++){
+                dp[i] = dp[i] || dp[j] && wordSet.count(s.substr(j, i - j)) > 0;
             }
         }
         return dp[n];
+
     }
-};
+// };
+
 
 
 // //!!!!! sol1.2, dfs with memorization, O(n^3), O(n)
