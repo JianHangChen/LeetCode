@@ -1,3 +1,81 @@
+
+
+// 1. optional usage:
+
+//     std::optional<int> deQueue(){
+//         if(isEmpty()) return std::nullopt; 
+//         int value = 0;
+//         return value;
+//     }
+// callsite:
+    // const auto op = m.deQueue();
+    // if(op.has_value()) {
+    //     std::cout << *op << std::endl;
+    // }
+
+// 2. template for array size
+// template<typename SIZE> // use array in the private class
+// private: 
+//      std::array<int, SIZE> _arr;
+
+
+class MyCircularQueue{
+private:
+    int _capacity;  // use _ for private member
+    vector<int> _nums;
+    int _head, _tail;
+    int _len; // len : how many element actually in the queue
+public:
+    // Initializes the object with the size of the queue to be k.
+    MyCircularQueue(int k): 
+        _capacity(k),
+        _head(0),
+        _tail(0),
+        _len(0)
+    {
+        _nums.resize(k, 0);
+    }
+     // Gets the front item from the queue. If the queue is empty, return -1.
+    int Front() const {
+        if(isEmpty()) return -1; 
+        return _nums[_head]; // nums[1]
+    };
+    // Gets the last item from the queue. If the queue is empty, return -1.
+    int Rear() const {
+        if(isEmpty()) return -1;
+        return _nums[(_tail - 1 + _capacity) % _capacity];
+    } 
+    
+    // Inserts an element into the circular queue(enQueue from back). Return true if the operation is successful.
+    bool enQueue(int value){
+        if(isFull()) return false;
+        _nums[_tail] = value;// nums[0] = -4
+        _len++; // tail = 1, len = 4
+        _tail = (_tail + 1) % _capacity;
+        return true;
+    }
+    
+    //Deletes an element from the circular queue(deQueue from front). Return true if the operation is successful.
+    bool deQueue(){
+        if(isEmpty()) return false; // std::nullopt; 
+        
+        int value = Front();
+        _head = (_head + 1) % _capacity; //1
+        _len--; // 1->0
+        return true;
+    }
+
+    //Checks whether the circular queue is empty or not.
+    bool isEmpty() const {
+        return _len == 0;
+    }
+    //Checks whether the circular queue is full or not.
+    bool isFull() const {
+        return _len == _capacity;
+    }
+};
+
+
 class MyCircularQueue:
 
     def __init__(self, k: 'int'):
