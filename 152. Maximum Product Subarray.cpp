@@ -1,22 +1,60 @@
-// !!! sol2, from sol2,  keep max_so_far and min_so_fat, O(n), O(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// !!!!! sol2, from sol2,  keep max_so_far and min_so_far, O(n), O(1)
+
+
+//  [2,3,-2,4]
+//   2 6 -12 -48
+//  [-2 0 -1]
+//  [5 -1 4 -2 0 -1 4 -2 -2]
+//  5  -5 -20 40 0 -1 -4 8 -16
+
+// _____nums[i] has 3 cases:
+
+// __{[positive], nums[i]} // [positive product include i - 1]
+// _{[negative ], nums[i]}// [negative product include i - 1]
+// ______________ {nums[i]}// start again from nums[i]
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
         int n = nums.size();
-        if(n < 1) return 0;
         int res = nums[0];
         int max_so_far = nums[0], min_so_far = nums[0];
-        for(int i = 1; i < n; i++){
-            if(nums[i] < 0) swap(max_so_far, min_so_far);
-            max_so_far = max(nums[i], nums[i] * max_so_far);
-            min_so_far = min(nums[i], nums[i] * min_so_far);
+        
+        for(int i = 1; i < n ; i++){
+            int max_so_far_= max_so_far;
+            max_so_far = max(nums[i], max(max_so_far * nums[i], min_so_far * nums[i]));
+            min_so_far = min(nums[i], min(max_so_far_ * nums[i], min_so_far * nums[i]));
+            
             res = max(res, max_so_far);
         }
-        return res;
+        return res;            
     }
 };
-
-
 
 // class Solution:
     
