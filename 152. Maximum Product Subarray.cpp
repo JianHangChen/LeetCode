@@ -1,29 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // !!!!! sol2, from sol2,  keep max_so_far and min_so_far, O(n), O(1)
 
 
