@@ -1,8 +1,9 @@
+
 //!!!!! sol3.1 use this one as final
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        k = nums.size() - k + 1;
+        k = nums.size() - k + 1; // k th smallest element!!!
         int left = 0, right = nums.size() - 1;
         int pivot = left;
         while(left <= right){
@@ -25,8 +26,8 @@ public:
         int pval = nums[left];
         
         int l = left + 1, r = right;
-        while(l <= r){
-            if(nums[l] > pval && nums[r] < pval){
+        while(l <= r){ /// _____<= val < 
+            if(nums[l] > pval && nums[r] <= pval){
                 swap(nums[l++], nums[r--]);
             }
             else if(nums[r] >= pval){
