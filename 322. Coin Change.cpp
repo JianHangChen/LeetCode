@@ -1,31 +1,31 @@
 
 
 // !! sol4, dp, top-down, from sol2, O(S*n), O(n)
-// class Solution{
-// public:
-//     unordered_map<int, int> m;
+class Solution{
+public:
+    unordered_map<int, int> m;
     
-//     int coinChange(vector<int>& coins, int amount){
+    int coinChange(vector<int>& coins, int amount){
         
-//         if(amount == 0) return 0;
-//         if(amount < 0) return -1;
+        if(amount == 0) return 0;
+        if(amount < 0) return -1;
         
-//         if(m.count(amount) > 0) return m[amount];
+        if(m.count(amount) > 0) return m[amount];
         
-//         int res = INT_MAX;
-//         for(int coin:coins){
-//             if(amount >= coin){
-//                 int c = coinChange(coins, amount - coin);
-//                 if(c != -1){
-//                     res = min(res, c+1);
-//                 }                
-//             }
-//         }
+        int res = INT_MAX;
+        for(int coin:coins){
+            if(amount >= coin){
+                int c = coinChange(coins, amount - coin);
+                if(c != -1){
+                    res = min(res, c+1);
+                }                
+            }
+        }
         
-//         return m[amount] = (res == INT_MAX ? -1 : res);
+        return m[amount] = (res == INT_MAX ? -1 : res);
         
-//     }
-// };
+    }
+};
 
 
 // !!! sol3, dp, from sol3 or gy1, bottom-up,  O(S*n), O(n)
