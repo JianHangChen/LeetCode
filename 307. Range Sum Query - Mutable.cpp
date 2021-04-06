@@ -59,12 +59,9 @@ public:
     }
 };
 
-/**
- * Your NumArray object will be instantiated and called as such:
- * NumArray* obj = new NumArray(nums);
- * obj->update(index,val);
- * int param_2 = obj->sumRange(left,right);
- */
+
+
+
 // sol1,  update(O(sqrt(n)), sum O(sqrt(n))
 // this solution is to separate n into sqrt(n) blocks, when you want to sum for [i,j], 
 // just calculate the related block, block_start, block_end.
