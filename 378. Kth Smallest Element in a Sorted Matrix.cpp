@@ -1,4 +1,4 @@
-//!!!! sol3, binary search in range x, count by sorted matrix property, by gy3, O(nlog(x))
+//!!!! sol3, binary search in range x, count by sorted matrix property, by gy3, O(nlog(x)), O(1)
 
 class Solution{
 public:
@@ -66,6 +66,46 @@ int kthSmallest(vector<vector<int>>& matrix, int k){
 
 };
 
+
+
+//!!!!! sol1.1, dijkstra
+// similar to sol1
+// klog(min(m, k)), O(k)
+class Solution {
+public:
+    vector<vector<int>> dirs = {{0, 1}, {1, 0}};
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int m = matrix.size(), n = matrix[0].size();
+        int count = 0;
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>> > pq;
+        pq.push({matrix[0][0], 0, 0}); 
+        matrix[0][0] = INT_MAX;
+        while(!pq.empty()){
+            auto cur = pq.top(); pq.pop();
+            count++;
+            if(count == k) return cur[0];
+            int i = cur[1], j = cur[2];
+            
+            for(auto& dir:dirs){
+                int x = i + dir[0], y = j + dir[1];
+                if(isvalid(x, y, m, n, matrix)){
+                    pq.push({matrix[x][y], x, y});
+                    matrix[x][y] = INT_MAX;
+                }
+            }            
+        }
+        
+        return -1;
+    }
+    bool isvalid(int x, int y, int m, int n, vector<vector<int>>& matrix){
+        if(x < 0 || x >= m || y < 0 || y >= n || matrix[x][y] == INT_MAX) return false;
+        return true;        
+    }
+};
+
+// [[X,5|,9],
+// [10|,11,13]
+// [12,13,15]], k = 8 -> 13
 
 // sol1, priority queue n^2log(k)
 class Solution{
