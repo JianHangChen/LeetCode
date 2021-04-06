@@ -1,4 +1,4 @@
-//!!!! sol3, binary search in range x, count by sorted matrix property, by gy3, O(nlog(x)), O(1)
+//!!!!! sol3, binary search in range x, count by sorted matrix property, by gy3, O(nlog(x)), O(1)
 
 class Solution{
 public:
