@@ -1,59 +1,70 @@
 //!!! sol4, segment tree, space O(n), build O(n), update O(logn), get O(logn)
-class SegTreeNode{
-public:
-    SegTreeNode* left, *right;
-    int start, end, val;
-    SegTreeNode(int i, int j, int x):start(i), end(j), val(x){
-    }
-};
 class NumArray {
-public:
-    SegTreeNode* segTreeRoot;
-    NumArray(vector<int>& nums) {
-        int n = nums.size();
-        segTreeRoot = buildSegTree(0, n-1, nums);
-    }
-    SegTreeNode* buildSegTree(int left, int right, vector<int>& nums){
-        if(left > right) return NULL;
-        SegTreeNode* root = new SegTreeNode(left, right, nums[left]);
-        if(left == right){
-            return root;
+private:
+    struct tNode{
+        tNode *left, *right;
+        int val;
+        int start, end;
+        tNode(int s, int e, int x):
+            start(s),
+            end(e),
+            val(x){
+            
         }
-        int mid = left + (right - left) / 2;
-        root->left = buildSegTree(left, mid, nums);
-        root->right = buildSegTree(mid+1, right, nums);
+    };
+    tNode* buildSegTree(int start, int end, vector<int>& nums){
+        if(start > end) return NULL;
+        tNode* root = new tNode(start, end, nums[start]);
+        if(start == end) return root;
+        int mid = start + (end - start) / 2;
+        root->left = buildSegTree(start, mid, nums);
+        root->right = buildSegTree(mid+1, end, nums);
         root->val = root->left->val + root->right->val;
-        return root;        
+        return root;
     }
-    void update(int i, int val) {
-        update(segTreeRoot, i, val);
+    
+public:
+    tNode* tRoot;
+    NumArray(vector<int>& nums) {
+        tRoot = buildSegTree(0, nums.size() - 1, nums);
     }
-    void update(SegTreeNode* root, int i, int val){
-        if(root->start == root->end && root->start == i){
-            root->val = val; return;
+    
+    void update(int index, int val, tNode* cur){
+        if(cur->start == index && cur->end == index){
+            cur->val = val;
+            return;
         }
-        int mid = root->start + (root->end - root->start) / 2;
-        if(i <= mid){
-            update(root->left, i, val);
-        }
-        else{
-            update(root->right, i, val);
-        }
-        root->val = root->left->val + root->right->val;        
+        int mid = cur->start + (cur->end - cur->start)/2;
+        if(index <= mid) update(index, val, cur->left);
+        else update(index, val, cur->right);
+        cur->val = cur->left->val + cur->right->val;
+        
     }
-    int sumRange(int i, int j) {
-        return sumRange(segTreeRoot, i, j);
+    void update(int index, int val) {
+        update(index, val, tRoot);
     }
-    int sumRange(SegTreeNode* cur, int i, int j){
-        if(i > cur->end || j < cur->start || i > j) return 0;
-        if(i<= cur->start && cur->end <= j) return cur->val;
+    int sumRange(int start, int end, tNode* cur) {
+        if(start > end || start > cur->end || end < cur->start) return 0;
+        if(start <= cur->start && end >= cur->end){
+            return cur->val;
+        }
         int mid = cur->start + (cur->end - cur->start) / 2;
-        if(j <= mid) return sumRange(cur->left, i, j);
-        if(i > mid) return sumRange(cur->right, i, j);
-        return sumRange(cur->left, i, mid) + sumRange(cur->right, mid+1, j);
+        if(end <= mid) return sumRange(start, end, cur->left);
+        if(start > mid) return sumRange(start, end, cur->right);
+        return sumRange(start, mid, cur->left) + sumRange(mid+1, end, cur->right);
+    }
+    
+    int sumRange(int start, int end) {
+        return sumRange(start, end, tRoot);
     }
 };
 
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray* obj = new NumArray(nums);
+ * obj->update(index,val);
+ * int param_2 = obj->sumRange(left,right);
+ */
 // sol1,  update(O(sqrt(n)), sum O(sqrt(n))
 // this solution is to separate n into sqrt(n) blocks, when you want to sum for [i,j], 
 // just calculate the related block, block_start, block_end.
