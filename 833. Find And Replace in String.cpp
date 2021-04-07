@@ -1,3 +1,26 @@
+// !!!!! sol3, O(n+L), O(n+L)
+class Solution {
+public:
+    string findReplaceString(string S, vector<int>& indexes, vector<string>& sources, vector<string>& targets) {
+        unordered_map<int, int> stringIdxToOpIdx;
+        for(int i = 0; i < indexes.size(); i++){
+            if(sources[i] == S.substr(indexes[i], sources[i].size())) stringIdxToOpIdx[indexes[i]] = i;
+        }
+        int i = 0;
+        string res = "";
+        while(i < S.size()){
+            if(stringIdxToOpIdx.count(i) > 0){
+                res += targets[stringIdxToOpIdx[i]];
+                i += sources[stringIdxToOpIdx[i]].size();
+            }
+            else{
+                res += S[i++];
+            }
+        }
+        return res;
+    }
+};
+
 // !!! sol2, O(qlogq, nq), O(n), from gy1
 // use a pair of index for sort, (don't do quicksort all the time, it's very time consuming to write it)
 // n is the length of S, l is the total length of replacement string
