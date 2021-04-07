@@ -1,30 +1,4 @@
 
-/// !!! my backtracking, repeat sol1.1, between O(n!)  and O(n*n!),  space O(n!)
-//n + n(n-1) + ... + n!   =  C(n, 1) + C(n,2) + ...C(n, n) = sum( n!/(n-k)! ) = 
-class Solution{
-public:
-    vector<vector<int>> permute(vector<int>& nums){
-        vector<vector<int>> res;    
-        permute(0, nums, res);
-        return res;
-    }
-
-    void permute(int level, vector<int>& nums, vector<vector<int>>& res){
-        if(level + 1 == nums.size()){
-            res.push_back(nums);
-            return;
-        }
-        
-        for(int i = level; i < nums.size(); i++){
-            swap(nums[level], nums[i]);
-            permute(level+1, nums, res);
-            swap(nums[level], nums[i]);
-        }
-    }
-    
-};
-
-
 // !!! my the same as sol2,  space O(n!)
 // (sum[(n-1)!] ) -> better than (n!), worse than O(n*n!)
 // if we think push_back and insert to ele has length k, then it should be times n, sum[(n)!] 
@@ -102,9 +76,10 @@ public:
     }
 };
 
-// !!! sol1.1, dfs, backtracking , from gy2, no need to use v
-// between O(n!)  and O(n*n!),  space O(n!)
-
+// !!!!!! using swap sol1.1, dfs, backtracking , from gy2, no need to use v
+// between O(n!)  and O(n*n!),  space O(n! * n)
+// n! solutions, each solution has n element
+//n + n(n-1) + ... + n!   =  C(n, 1) + C(n,2) + ...C(n, n) = sum( n!/(n-k)! ) =
 class Solution{
 public:
     vector<vector<int>> permute(vector<int>& nums){
