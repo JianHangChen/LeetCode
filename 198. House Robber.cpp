@@ -1,3 +1,6 @@
+
+
+
 // !!! sol3, dp, O(n),O(1)
 class Solution {
 public:
@@ -33,6 +36,7 @@ public:
     }
 };
 
+
 !!! sol1, my dfs with memo, O(n), O(n)
 class Solution {
 public:
@@ -49,13 +53,86 @@ public:
         
         int res = 0;
         
-        // take the start:
+        // take the start house:
         res = max(res, nums[start] + helper(nums, start + 2));
         // not take this house
         res = max(res, helper(nums, start + 1));
         memo[start] = res;
         return res;
-        
     }
 };
+
+
+
+
+
+
+
+// [1,2,3,1]
+// [2,5,9,1]
+// [2,5,1,7]
+// [2,5,1,3]
+
+//!!! about follow up, 2d house robber
+// https://www.1point3acres.com/bbs/thread-743843-1-1.html
+class Solution{
+public:
+    int m, n;
+    int rob(vector<vector<int>> mat){
+        m = mat.size(); n = mat[0].size();
+        vector<vector<int>> dp(m, vector<int> (n, 0));
+        // dp[i][j] the maximum amount we can rob when we reach (i, j) 
+        // case 1: rob current (i, j)
+        // case 2: not taking (i, j)
+        // dp[0][0] = mat[0][0];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+//                 (i,j-2), ( i-1, j-2), (i-2, j-1), (i-2, j) + m[i][j]
+// (i-1, j), (i-1,j-1),(i,j-1)
+                
+                // additional case
+                if(isvalid(i-2, j+2)) dp[i][j] = max(dp[i][j], dp[i-2][j+2] + mat[i][j]);
+                else dp[i][j] = max(dp[i][j], mat[i][j]);
+                if(isvalid(i-2, j+1)) dp[i][j] = max(dp[i][j], dp[i-2][j+1] + mat[i][j]);
+                else dp[i][j] = max(dp[i][j], mat[i][j]);
+                
+                if(isvalid(i-1, j+1)) dp[i][j] = max(dp[i][j], dp[i-1][j+1]);                
+                //
+                
+                if(isvalid(i-2, j)) dp[i][j] = max(dp[i][j], dp[i-2][j] + mat[i][j]);
+                else dp[i][j] = max(dp[i][j], mat[i][j]);
+                if(isvalid(i-2, j-1)) dp[i][j] = max(dp[i][j], dp[i-2][j-1] + mat[i][j]);
+                else dp[i][j] = max(dp[i][j], mat[i][j]);
+                if(isvalid(i-1, j-2)) dp[i][j] = max(dp[i][j], dp[i-1][j-2] + mat[i][j]);
+                else dp[i][j] = max(dp[i][j], mat[i][j]);
+                if(isvalid(i, j-2)) dp[i][j] = max(dp[i][j], dp[i][j-2] + mat[i][j]);
+                else dp[i][j] = max(dp[i][j], mat[i][j]);
+                
+                if(isvalid(i-1, j)) dp[i][j] = max(dp[i][j], dp[i-1][j]);
+                if(isvalid(i-1, j-1)) dp[i][j] = max(dp[i][j], dp[i-1][j-1]);                
+                if(isvalid(i, j-1)) dp[i][j] = max(dp[i][j], dp[i][j-1]);
+                
+            }
+        }
+        cout << dp[m-1][n-1] <<endl;
+        cout << dp[0][0] << endl;
+        return dp[m-1][n-1];
+    }
+    int isvalid(int i, int j){
+        if(i < 0 || i >= m || j < 0 || j >= n) return false;
+        return true;
+    }
+};
+
+int main() {
+    vector<vector<int>> mat1 = {
+     {1,2,3,1},
+     {2,5,9,1},
+     {2,5,1,7},
+     {2,5,1,3}};
+    Solution sol;
+    sol.rob(mat1);
+    std::cout << "Hello World!\n";
+}
+
 
