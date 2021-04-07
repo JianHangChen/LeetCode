@@ -102,7 +102,7 @@ public:
     }
 };
 
-// sol1, from gy1, dfs, backtracking   , between O(n!)  and O(n*n!),  space O(n!)
+// sol1, from gy1, dfs, backtracking   O(n*n!),  space O(n!)
 class Solution {
 public:
     vector<vector<int>> permute(vector<int>& nums) {
