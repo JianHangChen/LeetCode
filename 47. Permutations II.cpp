@@ -1,4 +1,4 @@
-// !!!!!! sol4, use visited to remember the visited place
+// !!!!!! sol4, use visited to remember the visited place, O(n*n!), O(n!)
 // https://www.youtube.com/watch?v=T909rebQJ70
 class Solution {
 public:
