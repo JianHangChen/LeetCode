@@ -1,3 +1,31 @@
+// sol4, 
+// 2^n, 2^n
+// https://www.youtube.com/watch?v=T909rebQJ70
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        int n = nums.size();
+        vector<int> cur = {};
+        sort(nums.begin(), nums.end());
+        dfs(nums, cur, 0, res);
+        return res;
+    } 
+    void dfs(vector<int>& nums, vector<int>& cur, int start, vector<vector<int>>& res){
+        if(start == nums.size()){
+            res.push_back(cur);
+            return;
+        }
+        
+        cur.push_back(nums[start]);
+        dfs(nums, cur, start+1, res); // add start to cur
+        cur.pop_back();
+        
+        while(start+1 < nums.size() && nums[start+1] == nums[start]) start++;// remove duplicate
+        dfs(nums, cur, start+1, res); // not add start to cur
+        
+    }
+};
 
 // // sol2, iteratively, from gy2, O(n* 2^n), O(2^n)
 class Solution{
