@@ -1,3 +1,29 @@
+//!!!!!! sol4, O(2^n), O(2^n)
+// https://www.youtube.com/watch?v=T909rebQJ70
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> res;
+        vector<int> cur;
+        dfs(res, cur, 0, nums);
+        return res;
+    }
+    void dfs(vector<vector<int>>& res, vector<int>& cur, int start, vector<int>& nums){
+        if(start == nums.size()){
+            res.push_back(cur);
+            return;
+        }
+        
+            cur.push_back(nums[start]);
+            dfs(res, cur, start+1, nums);
+            cur.pop_back();
+
+            dfs(res, cur, start+1, nums);
+        
+    }
+};
+
 // !!!!sol2, iteratively, the same as sol1 or gy1, O(n*2^n), O(2^n), n is the copy of a vector v
 
 class Solution{
