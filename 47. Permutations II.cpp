@@ -1,4 +1,31 @@
-
+// !!!!!! sol4, use visited to remember the visited place
+// https://www.youtube.com/watch?v=T909rebQJ70
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        vector<bool> visited(n, false);
+        vector<int> cur;
+        dfs(res, nums, cur, visited);
+        return res;
+    }
+    void dfs(vector<vector<int>>& res, vector<int>& nums, vector<int>& cur, vector<bool>& visited){
+        if(cur.size() == nums.size()){
+            res.push_back(cur);
+            return;
+        }
+        for(int i = 0; i < nums.size(); i++){
+            if(visited[i] || i > 0 && nums[i] == nums[i-1] && !visited[i-1]) continue;
+            visited[i] = true;
+            cur.push_back(nums[i]);
+            dfs(res, nums, cur, visited);
+            cur.pop_back();
+            visited[i] = false;
+        }
+    }
+};
 
 
 
