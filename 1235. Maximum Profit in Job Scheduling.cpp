@@ -10,14 +10,15 @@ public:
         sort(data.begin(), data.end());
         map<int, int> dp;
         dp[0] = 0; //
-        for(int i = 0; i < n; i++){
-            int end = data[i][0], start = data[i][1], pro = data[i][2];
+        for(auto& job:data){
+            int end = job[0], start = job[1], pro = job[2];
             int dpj = prev(dp.upper_bound(start))->second; // get the valid item j in the treemap
-            dp[end] = max(pro+dpj, dp.rbegin()->second );
+            dp[end] = max(pro + dpj, dp.rbegin()->second );
         }
         return dp.rbegin()->second;
     }
 };
+
 
 
 //!!! sol1, nice dp solution with a little bit greedy(find the closest no overlap index)
