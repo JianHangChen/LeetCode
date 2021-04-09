@@ -55,3 +55,30 @@ public:
         return n - dp[n-1];
     }
 };
+
+
+
+// sol2.2, much better dp, O(n^2), O(n)
+// early break compare to sol2
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        int n = intervals.size();
+        if(n == 0) return 0;
+        sort(intervals.begin(), intervals.end());
+        vector<int> dp(n, 1);
+        // dp[i], the maximum intervals we can take for [0, i] intervals in total
+        // base case dp[0] = 1
+        for(int i = 1; i < n; i++){
+            dp[i] = dp[i-1];
+            for(int j = i-1; j >= 0; j--){
+                if(intervals[j][1] <= intervals[i][0]){
+                    dp[i] = max(dp[j] + 1, dp[i]);
+                    break;
+                }
+            }
+        }
+        return n - dp[n-1];
+    }
+};
