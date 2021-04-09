@@ -31,7 +31,6 @@ public:
                 s.erase(s.begin());
                 count++;
             }
-            else if(i == events.size()) break;
             day++;
         }
         return count;
