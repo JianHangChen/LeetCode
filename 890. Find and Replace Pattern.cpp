@@ -18,43 +18,31 @@
 //     }
 // };
 
-// sol2, from gy1, double map, O(mn), O(mn)
+//!!! sol2, from gy1, double map, O(mn), O(mn)
 
-// class Solution{
-// public:
-//     vector<string> findAndReplacePattern(vector<string>& words, string pattern){
-//         vector<string> ans;
-        
-//         for(auto& word:words){
-//             unordered_map<char, char> m1, m2;
-//             if(word.size() != pattern.size()) continue;
+class Solution {
+public:
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        vector<string> res;
+        for(string& w:words){
+            if(match(w, pattern)){
+                res.push_back(w);
+            }
+        }
+        return res;
+    }
+    bool match(string& w, string& p){
+        if(w.size() != p.size()) return false;
+        unordered_map<char, char> m1, m2; // m1: w->p   m2: p->w
+        for(int i = 0; i < w.size(); i++){
+            if(m1.count(w[i]) == 0) m1[w[i]] = p[i];
+            if(m2.count(p[i]) == 0) m2[p[i]] = w[i];
+            if(m1[w[i]] != p[i] || m2[p[i]] != w[i]) return false;
             
-//             int i = 0; 
-//             while(i < word.size()){
-//                 if(m1.count(word[i]) > 0){
-//                     if(m1[word[i]] != pattern[i]){
-//                         break;
-//                     }
-//                 }
-//                 else{
-//                     m1[word[i]] = pattern[i];
-//                 }
-                
-//                 if(m2.count(pattern[i]) > 0){
-//                     if(m2[pattern[i]] != word[i]){
-//                         break;
-//                     }
-//                 }
-//                 else{
-//                     m2[pattern[i]] = word[i];
-//                 }                
-//                 i++;
-//             }
-//             if(i == word.size()) ans.push_back(word);
-//         }
-//         return ans;
-//     }
-// };
+        }
+        return true;
+    }
+};
 
 
 //!!! sol1, my projection, O(nm), O(mn), same as gy3
