@@ -1,4 +1,31 @@
-// !!!!!! sol4, use visited to remember the visited place, O(n*n!), O(n!)
+// !!!!! sol5, from lai, use hashset for visit
+// O(nn!), O(n^2+nn!)
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
+        dfs(nums, 0, res);
+        return res;
+    }
+    void dfs(vector<int>& nums, int start, vector<vector<int>>& res){
+        if(nums.size() == start){
+            res.push_back(nums);
+            return;
+        }
+        unordered_set<int> s;
+        for(int i = start; i < nums.size(); i++){
+            if(s.count(nums[i]) == 0){
+                s.insert(nums[i]);
+                swap(nums[i], nums[start]);
+                dfs(nums, start+1, res);
+                swap(nums[i], nums[start]);                
+            }
+        }
+    }
+    
+};
+
+// !!! sol4, use visited to remember the visited place, O(n*n!), O(n!)
 // https://www.youtube.com/watch?v=T909rebQJ70
 class Solution {
 public:
