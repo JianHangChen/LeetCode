@@ -1,3 +1,37 @@
+//!!!! sol2.1, from sol3, rolling hash, ROBIN KARP, O(m), O(1)
+// better than sol2, no need to use mod, use unsigned long long instead
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if(needle.empty()) return 0;
+        int m = haystack.size(), n = needle.size();
+        if(m < n) return -1;
+
+        unsigned long long hash_needle = 0, hash_hay = 0, pow26 = 1;
+        for(int i = 0; i < n; i++){
+            hash_hay = hash_hay * 26 + (haystack[i] - 'a');
+            hash_needle = hash_needle * 26 + (needle[i]-'a');
+            pow26 = pow26 * 26;
+        }
+        
+        if(hash_hay == hash_needle && haystack.substr(0,n) == needle) return 0;        
+        
+        
+        for(int i = 0; i <= m - n; i++){
+            if(hash_hay == hash_needle){
+                if(haystack.substr(i, n) == needle) return i;
+            }
+            if(i == m - n) break;
+            int pre_d = haystack[i] - 'a', last_d = haystack[i+n] - 'a';
+            hash_hay = hash_hay * 26 -  pre_d * pow26  + last_d ;
+            
+        }
+        return -1;
+    }
+};
+
+
 
 //!!! sol2, from sol3, rolling hash, ROBIN KARP, O(m), O(1)
 
