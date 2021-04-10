@@ -2,36 +2,39 @@
 //!!! sol2, from sol3, rolling hash, ROBIN KARP, O(m), O(1)
 
 
+
 class Solution {
 public:
     int strStr(string haystack, string needle) {
-        if(needle == "") return 0;
+        if(needle.empty()) return 0;
         int m = haystack.size(), n = needle.size();
         if(m < n) return -1;
-        long long MOD = 2e9+1; //it's a safe number for () * 26, still < LONG LONG_MAX
-        long long hHash = 0, nHash = 0;//  USE LONG LONG FOR HASH
-        for(int i = 0; i < n; i++){
-            hHash = (hHash * 26 % MOD + haystack[i] - 'a')%MOD;
-            nHash = (nHash * 26 % MOD + needle[i] - 'a')%MOD;
-        }
-        // h = h * 26 + c
-        // h2 = c *26
-        // FOR n = 2-> c^1
-        // FOR n = N, c^(N-1)
-        long long pow26 = 1;
-        for(int i = 1; i < n; i++) pow26 = pow26 * 26 % MOD;        
+        long long MOD = 1e9+23; // it's a safe number for () * 26, still < LONG LONG_MAX
+        long long hash_needle = 0, hash_hay = 0, pow26 = 1;
         
-        for(int i = 0; i + n <= m; i++){
-            if(hHash == nHash){
+        for(int i = 0; i < n; i++){
+            hash_hay = (hash_hay * 26 + (haystack[i] - 'a')) % MOD;
+            hash_needle = (hash_needle * 26 + (needle[i]-'a')) % MOD;
+            pow26 = (pow26 * 26) % MOD;
+        }
+        
+        if(hash_hay == hash_needle && haystack.substr(0,n) == needle) return 0;        
+        
+        
+        for(int i = 0; i <= m - n; i++){
+            if(hash_hay == hash_needle){
                 if(haystack.substr(i, n) == needle) return i;
             }
-            if(i + n == m) break;
-            hHash = ((hHash - (haystack[i] - 'a') * pow26 + MOD) % MOD * 26 +  haystack[i+n] - 'a') % MOD; // CAREFULLY use "+ MOD) % MOD"
+            if(i == m - n) break;
+            
+            int pre_d = haystack[i] - 'a', last_d = haystack[i+n] - 'a';
+            hash_hay = ( (hash_hay * 26 % MOD -  pre_d * pow26 + MOD ) % MOD   + last_d ) % MOD;
+            
         }
         return -1;
-        
     }
 };
+
 
 
 
