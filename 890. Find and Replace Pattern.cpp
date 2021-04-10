@@ -51,32 +51,27 @@ class Solution {
 public:
     vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
         vector<string> res;
-        string proj_pattern = project(pattern);
-        for(auto& word:words){
-            if(proj_pattern == project(word)){
-                res.push_back(word);                
+        string pProj = project(pattern);
+        
+        for(string& w:words){
+            if(project(w) == pProj){
+                res.push_back(w);
             }
         }
-        return res;        
+        return res;
     }
     
-    string project(string& s){
-        string ans = s;
-        
+    string project(string& w){
+        char base = 'a';
+        string ans = w;
         unordered_map<char, char> m;
-        int proj_idx = 0;
-        for(int i = 0; i < s.size(); i++){
-            char c = s[i];
-            if(m.count(c) > 0) ans[i] = m[c];
-            else{
-                ans[i] = 'a' + proj_idx;
-                m[c] = ans[i];
-                proj_idx++;
+        for(int i = 0; i < w.size(); i++){
+            if(m.count(w[i]) == 0){
+                m[w[i]] = base++;
             }
-            
+            ans[i] = m[w[i]];
         }
-        
         return ans;
-        
     }
+    
 };
