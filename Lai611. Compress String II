@@ -1,0 +1,55 @@
+// sol1
+// 1. solve repeated char first, get string increasing or decreasing count
+// 2. from back to start, fill to the desired final lenth, also solve single char problem
+
+// “abbcccdeee” → “a1b2c3d1e3”
+// ab2c3de3 
+// a1b2c3d1e3
+// qaeeguvhhhccovpriyd
+class Solution {
+ public:
+  string compress(string chars) {
+      int s = 0, f = 0, n = chars.size(), count, extra = 0;
+      while(f < n){
+          chars[s++] = chars[f++];
+          count = 1;
+          while(f < n && chars[f] == chars[f-1]){
+              count++;
+              f++;
+          }
+          if(count != 1){
+              string cntStr = to_string(count);
+              extra -= count - 1 - cntStr.size();
+              for(char c:cntStr) chars[s++] = c;
+          }
+          else{
+            extra++;
+          }
+      }
+
+      int finalLen = n + extra;
+      for(int i = 0; i < extra; i++) chars += ' ';
+      f = s - 1, s = finalLen - 1;
+
+      bool isPreDigit = false;
+      while(f >= 0){
+          if(isdigit(chars[f])){
+              chars[s--] = chars[f--];
+              isPreDigit = true;
+          }
+          else{
+              if(isPreDigit){
+                  chars[s--] = chars[f--];
+              }
+              else{
+                  chars[s--] = '1';
+                  chars[s--] = chars[f--];
+              }
+              isPreDigit = false;
+          }
+      }
+
+      return chars.substr(0, finalLen);
+  }
+};
+
