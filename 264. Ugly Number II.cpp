@@ -1,4 +1,55 @@
-O(n), O(n)
+
+
+sol2, O(nlogn), O(n), use set
+class Solution {
+public:
+    vector<int> primes = {2, 3, 5};
+    int nthUglyNumber(int n) {
+        unordered_set<long long> visited;
+        set<long long> s;
+        s.insert(1);
+        long long cur;
+        for(int i = 1; i <= n; i++){
+            cur = *s.begin(); s.erase(s.begin());
+            for(int p:primes){
+                if(!visited.count(p*cur)) visited.insert(p*cur);
+                s.insert(p*cur);
+            }
+        }
+        return cur;
+
+    }
+};
+
+//!!! sol1.1, O(n), O(n)
+// 1 2 3 5
+// 4 6 10 | 6 9 15 | 10 15 25
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> nums(n+1, 0);
+        nums[1] = 1;
+        vector<int> primes = {2, 3, 5};    
+        vector<int> idxs = {1, 1, 1};
+        for(int t = 2; t <= n; t++){
+            int cur = INT_MAX;
+            for(int i = 0; i < 3; i++){
+                cur = min( cur,  nums[idxs[i]] * primes[i]); 
+            }
+            for(int i = 0; i < 3; i++){
+                if(cur == nums[idxs[i]] * primes[i]){
+                    idxs[i]++;
+                }
+            }
+            nums[t] = cur;
+        }
+        return nums[n];
+        
+    }
+};
+
+
+sol1, O(n), O(n)
 class Solution {
 public:
     int nthUglyNumber(int n) {
