@@ -1,3 +1,59 @@
+// !!!!2.2 my, iteratively selection sort
+// O(n), O(n)
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        int n = points.size();
+        vector<vector<int>> square;
+        for(int i = 0; i < n; i++){
+            int x = points[i][0], y = points[i][1];
+            square.push_back({ x*x + y * y, i});
+        }
+        int i = 0, j = n - 1;
+        
+        while(i <= j){
+            int pivot = Partition(i, j, square);
+            if(pivot + 1 == K)  break;
+            else if(pivot + 1 < K){
+                i = pivot + 1;
+            }
+            else{
+                j = pivot - 1;
+            }
+        }
+        
+        vector<vector<int>> res;
+        for(int t = 0; t < K; t++){
+            res.push_back(points[square[t][1]]);
+        }
+        return res;
+    }
+    
+    int Partition(int start, int end, vector<vector<int>>& square){
+        if(start == end) return start;
+        int tmp = start + rand() % (end - start + 1);
+        swap(square[start], square[tmp]);
+
+        
+        int val = square[start][0];
+        int i = start + 1, j  = end;
+        while(i <= j){
+            if(square[i][0] > val && square[j][0] <= val){
+                swap(square[i++], square[j--]);
+            }
+            else if(square[i][0] <= val){
+                i++;
+            }
+            else{
+                j--;
+            }
+        }
+        swap(square[start], square[j]);
+        return j;        
+    }
+
+};
+
 
 //!!! sol2.1, selection sort, revised from sol2, O(n), O(n)
 class Solution {
