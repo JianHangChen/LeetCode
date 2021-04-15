@@ -17,9 +17,9 @@ public:
     }
     int maxHistogram(vector<int>& h){
         int n = h.size();
-        stack<int> st;
+        stack<int> st; 
         int res = 0;
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < n; i++){ // carefull about right index in the last place, remember this time the stack is not empty
             if(st.empty() || h[st.top()] < h[i]){
                 st.push(i);
             }
