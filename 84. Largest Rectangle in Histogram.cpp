@@ -17,7 +17,7 @@ public:
                 int left;
                 if(st.empty()) left = -1;
                 else left = st.top();
-                res = max(res, heights[cur] * (i - left - 1));
+                res = max(res, heights[cur] * (i - left - 1)); // !!!! how to calculate the length
                 i--; // i did not change
             }                
         }
