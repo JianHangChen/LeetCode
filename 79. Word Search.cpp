@@ -6,7 +6,7 @@ public:
     int m, n;
     vector<vector<int>> dirs = {{0,1}, {1,0}, {0, -1}, {-1, 0}};
     bool exist(vector<vector<char>>& board, string word) {
-        m = board.size(); n = board[0].size();
+        m = board.size(); n = board[0].size();// carefull, if you want to use m n as global , don't do int!!!
         
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
