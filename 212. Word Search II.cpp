@@ -3,65 +3,63 @@
 class Solution {
 public:
     int m, n;
-    struct tNode{
-        string word;
-        tNode* next[26];
-        tNode(){
-            word = "";
-            for(int i = 0; i < 26; i++) next[i] = NULL;
+    struct Nod{
+        Nod* next[26] = {NULL};
+        string word = "";
+    };
+    Nod* root;
+    void BuildTrie(vector<string>& words){
+        for(string& w:words){
+            Insert(w);
         }
     };
-    
-    tNode* root;
-    
-    void insert(string& word){
-        tNode* cur = root;
-        for(char c:word){
+    void Insert(string& w){
+        Nod* cur =root;
+        for(char c:w){
             if(cur->next[c-'a'] == NULL){
-                cur->next[c-'a'] = new tNode();
+                cur->next[c-'a'] = new Nod();
             }
             cur = cur->next[c-'a'];
         }
-        cur->word = word;
+        cur->word = w;
     }
-    vector<string> res;
-    vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        m = board.size(); n = board[0].size();
-        root = new tNode();    
+        m = board.size(); n = board[0].size(); 
+        root = new Nod();
+        BuildTrie(words);
         
-        for(string& word:words){
-            insert(word);    
-        }
-        
-        for(int i = 0; i < m ; i++){
-            for(int j = 0; j <n; j++){            
-                dfs(board, i, j, root);
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                DFS(board, i, j, root);
             }
         }
         return res;
     }
-    
-    void dfs(vector<vector<char>>& board, int i, int j, tNode* cur){
+    vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    vector<string> res;
+    void DFS(vector<vector<char>>& board, int i, int j, Nod* cur){
         char c = board[i][j];
-        if(cur->next[c - 'a'] == NULL) return;
+        if(cur == NULL || cur->next[c-'a'] == NULL) return;
+        
         board[i][j] = '#';
-        cur = cur->next[c-'a'];
-        if(cur->word.size() != 0){
+        cur = cur->next[c-'a']; // move to the point c
+        
+        if(cur->word.size() > 0){
             res.push_back(cur->word);
-            cur->word = "";
+            cur->word = ""; // !!! remember to remove duplicate!
         }
+        
         for(auto& dir:dirs){
             int x = i + dir[0], y = j + dir[1];
-            if(isvalid(x, y, board)){
-                dfs(board, x, y, cur);            
-            }
+            if(Valid(x, y, board)) DFS(board, x, y, cur);
         }
         
         board[i][j] = c;
+        
     }
-    bool isvalid(int x, int y, vector<vector<char>>& board){
-        if(x < 0 || x >= m || y < 0 || y >= n || !isalpha(board[x][y])) return false;
+    bool Valid(int x, int y, vector<vector<char>>& board){
+        if(x < 0 || x >= m || y < 0 || y >= n || board[x][y] == '#') return false;
         return true;
     }
     
