@@ -1,6 +1,6 @@
 
 
-// sol1.1, !!!! my Union Find modified by gy, O(n), O(n)
+// sol1.1,  my Union Find modified by gy, O(n), O(n)
 class Solution {
 private:
   unordered_map<int, int> root;
@@ -36,36 +36,28 @@ public:
 
 
 
-// sol1, ! my Union Find, O(n), O(n)
+// sol1, !!!!!!! my Union Find, O(n), O(n)
 class Solution {
-private:
-  unordered_map<int, int> root;
 public:
+    unordered_map<int, int> root;
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        for(auto edge:edges){
-          for(auto ele:edge){
-            root[ele] = ele;
-          }
+        for(auto& e:edges){
+            root[e[0]] = e[0];
+            root[e[1]] = e[1];
         }
-
-        for(auto edge:edges){
-          
-          int root0 = find(edge[0]), root1 = find(edge[1]);
-          
-         if(root0 == root1){
-            return edge;
-          }
-          else{
-            root[root1] = root0;
-          }
+        for(auto& e:edges){
+            if(find(e[0]) == find(e[1])) return e;
+            uni(e[0], e[1]);
         }
         return {};
+        
     }
-
-    //template2
-    int find(int p){
-      if(root[p] == p) return p;
-      return find(root[p]);
+    int find(int a){
+        if(root[a] == a) return a;
+        return root[a] = find(root[a]);
+    }
+    void uni (int a, int b){
+        root[find(a)] = root[find(b)];
     }
 };
 
