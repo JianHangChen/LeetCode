@@ -5,8 +5,8 @@ class Solution {
 public:    
     struct CMP{
         bool operator ()(const pair<string, int>& a, const pair<string, int>& b) {
-            if(a.second == b.second) return a.first < b.first;
-            return a.second > b.second;
+            if(a.second == b.second) return a.first < b.first; // !!! top is the largest word
+            return a.second > b.second; // top is the lowest frequency
         }
     } cmp;
     
@@ -21,7 +21,7 @@ public:
             pq.push(item);
             if(pq.size() > k) pq.pop();
         }  
-        for(int i = k - 1; i >= 0; i--){
+        for(int i = k - 1; i >= 0; i--){ //!!! remember to reverse or from the end to begin
             res[i] = pq.top().first; pq.pop();
         }
         return res;
