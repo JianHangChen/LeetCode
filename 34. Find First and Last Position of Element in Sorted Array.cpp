@@ -1,3 +1,46 @@
+//!!!! sol2.1 new template
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.size() == 0) return {-1, -1};// !!! check 
+        int l = 0, r = nums.size() - 1;
+        vector<int> res;
+        
+        while(l < r - 1){
+            int mid = l + (r - l) / 2;
+            if(nums[mid] == target){
+                r = mid;
+            }
+            else if(nums[mid] < target){
+                l = mid;
+            }
+            else{
+                r = mid;
+            }
+        }
+        if(nums[l] == target) res.push_back(l);
+        else if(nums[r] == target) res.push_back(r);
+        else return {-1, -1};
+        
+        r = nums.size() - 1;
+        while(l < r - 1){
+            int mid = l + (r - l) / 2;
+            if(nums[mid] == target){
+                l = mid;
+            }
+            else if(nums[mid] < target){
+                l = mid;
+            }
+            else{
+                r = mid;
+            }
+        }
+        if(nums[r] == target) res.push_back(r);
+        else res.push_back(l);
+        return res;       
+        
+    }
+};
 
 // sol2, my upper lower bound not using default funciton
 
@@ -30,7 +73,7 @@ public:
 };
 
 
-//!!! sol1, my upper, lower bound , O(logn), O(1)
+//!!!! sol1, my upper, lower bound , O(logn), O(1)
 #include <stdc++.h>
 #include <algorithm>
 class Solution {
@@ -38,7 +81,7 @@ public:
     vector<int> searchRange(vector<int>& nums, int target) {
           int n = nums.size();
           auto lb = lower_bound(nums.begin(), nums.end(), target);
-          if(lb == nums.end() || *lb != target) return {-1, -1};
+          if(lb == nums.end() || *lb != target) return {-1, -1}; //!!! carefull about if we can find the target
 
           auto ub = upper_bound(nums.begin(), nums.end(), target);
           return {lb - nums.begin(), ub - nums.begin() - 1};
