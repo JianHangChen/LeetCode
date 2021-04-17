@@ -1,3 +1,34 @@
+// !!! sol2, 新模板
+class Solution {
+public:
+    int closestNumber(vector<int> &A, int target) {
+        if(A.empty()) return -1;
+
+        int l = 0, r = A.size() - 1;
+        while(l < r - 1){
+            int mid = l + (r - l) / 2;
+            if(A[mid] < target){
+                l = mid;
+            }
+            else{
+                r = mid;
+            }
+        }
+        // post processing
+        if(target - A[l] < A[r] - target){
+            return l;
+        }
+        else{
+            return r;
+        }
+
+    }
+
+};
+
+
+// sol1, my, Old version
+// !!! 122222222222222223, target = 1 can work
 class Solution {
 public:
     /**
