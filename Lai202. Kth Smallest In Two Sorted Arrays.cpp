@@ -1,3 +1,4 @@
+// median of two sorted array的前置题目
 class Solution {
  public:
   int kth(vector<int> a, vector<int> b, int k) {
