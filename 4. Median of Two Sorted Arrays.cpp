@@ -1,32 +1,38 @@
+//!!!, from sol1 of grandyang
+// O(log(m+n)), O(log(m+n))
 class Solution {
 public:
-    //!!!, from sol1 of grandyang
-    //test: [], [1]
-    // [1], [2]
-    // [1], []
-    
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int n = nums1.size(), m = nums2.size();
-        int m1 = findKth(nums1, nums2, 0, 0, (n + m + 1) / 2);
-        int m2 = findKth(nums1, nums2, 0, 0, (n + m + 2) / 2);
-        return double(m1 + m2) / 2 ;
+        int n1 = nums1.size(), n2 = nums2.size();
+        // 123-> 2th  (3+1)/2 = 2th and (3+2)/2 = 2th
+        // 1234-> 2th and 3th  (4+1)/2 = 2th, (5+1)/2 = 3th
+        int k1 = (n1 + n2 + 1) / 2, k2 = (n1 + n2 + 2) / 2; // !!! careful about the index
+        double a1 = findkth(nums1, nums2, k1, 0, 0);
+        double a2 = findkth(nums1, nums2, k2, 0, 0);
+        return (a1+a2) / 2.0;
     }
-    
-    int findKth(vector<int>& nums1, vector<int>& nums2, int i, int j, int k){
-        if(i >= nums1.size()) return nums2[j + k - 1];
-        if(j >= nums2.size()) return nums1[i + k - 1];
-        if(k == 1) return min(nums1[i], nums2[j]);
-        int mid1, mid2, num1, num2;
-        mid1 = i - 1 + k / 2;
-        mid2 = j - 1 + k / 2;
+    double findkth(vector<int>& nums1, vector<int>& nums2, int k, int s1, int s2){
+        int n1 = nums1.size(), n2 = nums2.size();
+        if(s1 >= n1) return nums2[s2 + k - 1];
+        if(s2 >= n2) return nums1[s1 + k - 1];
+        if(k == 1) return min(nums1[s1], nums2[s2]); // !!!important here about the exit condition
         
-        num1 = (mid1 >= nums1.size()) ? INT_MAX : nums1[mid1];
-        num2 = (mid2 >= nums2.size()) ? INT_MAX : nums2[mid2];
-        if( num1 > num2 ){
-            return findKth(nums1, nums2, i, j + k/2, k - k/2);
+        int half = k / 2;
+        if(s1 + half - 1 >= n1){ 
+            // !!! very careful about this case, 
+            // when s1 is not enough for half, the [s2, s2+half) is not the answer of kth element, delete it
+            return findkth(nums1, nums2, k - half, s1, s2 + half);
+        }
+        if(s2 + half - 1 >= n2){
+            return findkth(nums1, nums2, k - half, s1+half, s2);
+        }
+        
+        if(nums1[s1 + half - 1] >= nums2[s2 + half - 1]){
+            return findkth(nums1, nums2, k - half, s1, s2 + half);
         }
         else{
-            return findKth(nums1, nums2, i + k/2, j, k - k/2);
+            return findkth(nums1, nums2, k - half, s1+half, s2);
         }
     }
 };
+
