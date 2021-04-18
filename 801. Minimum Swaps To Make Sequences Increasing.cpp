@@ -1,5 +1,5 @@
 
-sol1.1, O(n), O(n), by dp
+// sol1.1, O(n), O(n), small modification, from grandyang
 class Solution {
 public:
     int minSwap(vector<int>& A, vector<int>& B) {
@@ -9,50 +9,45 @@ public:
         has_swap[0] = 1;
         no_swap[0] = 0;
         for(int i = 1; i < n; i++){
-        	if(A[i-1] >= A[i] || B[i-1] >= B[i]){
-	        	has_swap[i] = no_swap[i-1] + 1;
-	        	no_swap[i] = has_swap[i-1];
-        	}
-        	else if(A[i-1] < B[i] && B[i-1] < A[i]){
-        		no_swap[i] = min(no_swap[i-1], has_swap[i-1]) ;
-        		has_swap[i] = no_swap[i] + 1;
-        	}
-        	else{
-        		has_swap[i] = has_swap[i-1] + 1;
-        		no_swap[i] = no_swap[i-1];
-        	}
+	    if(A[i-1] < A[i] && B[i-1] < B[i]){
+		has_swap[i] = has_swap[i-1] + 1;
+		no_swap[i] = no_swap[i-1];
+	    }
+            
+            if(A[i-1] < B[i] && B[i-1] < A[i]){
+                has_swap[i] = min(has_swap[i], no_swap[i-1] + 1);
+                no_swap[i] = min(no_swap[i], has_swap[i-1]);
+            }
+
         }
         return min(has_swap[n-1], no_swap[n-1]);
     }
 };
 
-//sol1.2, O(n), O(1), dp
+//!!! sol1.2, O(n), O(1), dp
 class Solution {
 public:
+    int n;
     int minSwap(vector<int>& A, vector<int>& B) {
-    	int n = A.size();
-    	// vector<int> has_swap(n, n);
-    	// vector<int> no_swap(n, n);
-        int pre_has_swap, pre_no_swap;
-        int has_swap = 1, no_swap = 0;
+        n = A.size();
+        // carefull about initialization, it should be big number since we want a min answer
+        //noswap[i]: without swap A[i] B[i], the minimum swap required for [0:i] become valid
+        int noswap = n, pre_noswap = 0;
+        int swap = n, pre_swap = 1;
         for(int i = 1; i < n; i++){
-            pre_has_swap = has_swap;
-            pre_no_swap = no_swap;
-            
-        	if(A[i-1] < A[i] && B[i-1] < B[i]){
-	        	has_swap = pre_has_swap + 1;
-	        	no_swap = pre_no_swap;
-        	}
-            else{
-                has_swap = n;
-                no_swap = n;
+            noswap = n; swap = n;
+            if(A[i] > A[i-1] && B[i] > B[i-1]){
+                noswap= pre_noswap;
+                swap = pre_swap + 1;
             }
-            
-            if(A[i-1] < B[i] && B[i-1] < A[i]){
-                has_swap = min(has_swap, pre_no_swap + 1);
-                no_swap = min(no_swap, pre_has_swap);
+            if(A[i] > B[i-1] && B[i] > A[i-1]){
+                noswap = min(noswap, pre_swap);
+                swap = min(swap, pre_noswap + 1);
             }
+            pre_noswap = noswap;
+            pre_swap = swap;
         }
-        return min(has_swap, no_swap);
+        return min(noswap, swap);
     }
+};
 };
