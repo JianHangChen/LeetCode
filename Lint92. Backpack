@@ -1,0 +1,18 @@
+// sol1, my, dp, O(mn), O(m)
+class Solution {
+public:
+    int backPack(int m, vector<int> &A) {
+        int n = A.size(), res = 0;
+        vector<int> dp(m+1, false); // the money can reach for current item
+        dp[0] = true;
+        for(int i = 0; i < n; i++){ // with item [0, i]
+            for(int j = m; j >= 0; j--){ // !!! carefull about the order, don't use previous result
+                if(j - A[i] >= 0){
+                    dp[j] = dp[j] || dp[j - A[i]];
+                    if(dp[j]) res = max(res, j);
+                }
+            }
+        }
+        return res;
+    }
+};
