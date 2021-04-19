@@ -76,7 +76,7 @@ public:
 //         int n = nums.size();
 //         vector<int> tmp = nums;
 //         sort(tmp.begin(), tmp.end());
-//         int mid = (n-1) / 2 , end = n - 1;
+//         int mid = (n-1) / 2 , end = n - 1; //carefull about the mid 12|3|45 mid=5/2 = 2, 3 5 2 4 1 ,  1 |2| mid = 2/2=1
 //         int i = 0;
 //         while(i < n){
 //             nums[i++] = tmp[mid--];
