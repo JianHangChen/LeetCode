@@ -1,0 +1,20 @@
+// sol1, my, O(mn^2), O(n)
+// !!! 多重背包问题
+
+class Solution {
+public:
+    int backPackVII(int n, vector<int> &prices, vector<int> &weight, vector<int> &amounts) {
+        // dp[i][j] for limit price = j, use [0, i] objects, the maximum weight we can get
+        int m = prices.size();
+        vector<int> dp(n+1, 0);
+        for(int i = 0; i < m; i++){
+            for(int j = n; j >= 0; j--){
+                for(int k = 0; k <= amounts[i] && j - prices[i] * k >= 0; k++){ 
+                // if(j - prices[i] >= 0 && amounts[i] > 0){
+                    dp[j] = max(dp[j], dp[j-k*prices[i]] + k * weight[i]);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
