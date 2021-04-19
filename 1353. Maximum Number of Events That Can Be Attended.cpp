@@ -1,3 +1,36 @@
+
+// !!! sol1.2 O(nlogn), O(n)
+// priority_queue
+class Solution {
+public:
+    int maxEvents(vector<vector<int>>& events) {
+        int n = events.size();
+        int res = 0;
+        sort(events.begin(), events.end());
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int i = 0, day = 1;
+        while(!pq.empty() || i < n){
+            if(pq.empty()){
+                day = max(day, events[i][0]);
+            }
+            while(i < n && events[i][0] <= day){
+                pq.push(events[i][1]);
+                i++;
+            }
+            while(!pq.empty() && pq.top() < day){
+                pq.pop();
+            }
+            if(!pq.empty()){
+                pq.pop();
+                res++;
+            }
+            day++;
+        }
+        return res;
+    
+    }    
+};
+
 // !!!sol1.1, O(nlogn), O(n)
 // https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/discuss/510263/JavaC%2B%2BPython-Priority-Queue
 // n is events.size()
