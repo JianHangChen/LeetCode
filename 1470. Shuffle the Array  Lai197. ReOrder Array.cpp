@@ -23,7 +23,7 @@ public:
         reverse(nums.begin() + mid, nums.begin() + rm);
         reverse(nums.begin() + lm, nums.begin() + rm);
 
-        Shuffle(nums, start, start + l/4 * 2 - 1);
+        Shuffle(nums, start, start + l/4 * 2 - 1); !!! 2*l/4 is not  l/4*2
         Shuffle(nums, start+l/4*2, end);
     }
     
