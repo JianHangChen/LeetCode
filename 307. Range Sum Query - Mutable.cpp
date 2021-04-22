@@ -44,8 +44,8 @@ public:
         update(index, val, tRoot);
     }
     int sumRange(int start, int end, tNode* cur) {
-        if(start > end || start > cur->end || end < cur->start) return 0;
-        if(start <= cur->start && end >= cur->end){
+        if(start > end || start > cur->end || end < cur->start) return 0; // !!!
+        if(start <= cur->start && end >= cur->end){ // !!!! 常常忘了这个条件
             return cur->val;
         }
         int mid = cur->start + (cur->end - cur->start) / 2;
