@@ -1,3 +1,6 @@
+// O(s*l+l*m), O(l*m)
+// s is the total len of S,  l is the longest word, m is the words.size()
+
 class Solution {
 private:
     struct Nod{
@@ -26,10 +29,10 @@ private:
         Nod* cur = root;
         int end = i;
         while(i < S.size()){
-            if(cur->next[S[i] - 'a'] == NULL) break;
+            if(cur->next[S[i] - 'a'] == NULL) break; 
             cur = cur->next[S[i] - 'a'];
             i++;
-            if(cur->word.size() > 0) end = i;
+            if(cur->word.size() > 0) end = i; //!!!注意一下这里写错了
         }
         return end;
     }
