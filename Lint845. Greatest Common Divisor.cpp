@@ -1,4 +1,4 @@
-// O(logn), O(logn)
+//!sol1, O(logn), O(logn)
 class Solution {
 public:
     int gcd(int a, int b) {
@@ -21,3 +21,18 @@ public:
 
 // 30 15
 // 15, 
+
+//!!!!! sol2, iteratively, O(logn), O(1)
+// https://www.youtube.com/watch?v=c4PQrLFj9Cw
+class Solution {
+public:
+    int gcd(int a, int b) {
+        if(a < b) swap(a, b);
+        while(b != 0){
+            int c = a % b;
+            a = b;
+            b = c;            
+        }
+        return a;
+    }
+};
