@@ -27,7 +27,7 @@ public:
 class Solution {
 public:
     int gcd(int a, int b) {
-        if(a < b) swap(a, b);
+        // if(a < b) swap(a, b);完全不需要swap，因为a < b时候得到的新一轮c会等于a，下一轮自动变成a>b
         while(b != 0){
             int c = a % b;
             a = b;
