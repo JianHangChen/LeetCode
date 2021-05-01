@@ -1,30 +1,41 @@
 
-sol4, !!!!! cycle detection, O(n), O(1)
-class Solution{
+// !!!!!  sol4, cycle detection, O(n), O(1)
+class Solution {
 public:
-    int findDuplicate(vector<int> & nums){
-        int slow = 0, fast = 0;
+    int findDuplicate(vector<int>& nums) {
+        int s = nums[0], f = nums[0];
         
+        // cycle detection // use number as indicator
         while(true){
-            slow = nums[slow];
-            fast = nums[fast]; fast = nums[fast];
-            
-            if(slow == fast) break; // !!!
+            s = nums[s]; 
+            f = nums[nums[f]];
+            if(s == f) break;
         }
-        
-        
-        fast = 0;
-        while(fast != slow){
-            slow = nums[slow];
-            fast = nums[fast];
-        } //entrance point
-        
-        return slow;
-        
-        
+        // find intersection point
+        s = nums[0];
+        while(s != f){
+            s = nums[s];
+            f = nums[f];
+        }
+        return s;        
     }
+    
+    
 };
 
+
+//! sol6, my, O(n), O(1)
+// inplace
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        while(true){
+            if(nums[0] == nums[nums[0]]) return nums[0];
+            swap(nums[0], nums[nums[0]]);
+        }
+        return -1;
+    }
+};
 
 
 //sol5, bit manipulation, O(n), O(1)
