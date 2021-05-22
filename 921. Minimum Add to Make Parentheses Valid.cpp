@@ -1,4 +1,4 @@
-// my, sol1, O(n), O(1)
+//!!! sol1, O(n), O(1)
 class Solution {
 public:
     int minAddToMakeValid(string s) {
@@ -18,5 +18,31 @@ public:
             }
         }
         return res + countLeft;
+    }
+};
+
+// sol2, O(N), O(N)
+
+class Solution {
+public:
+    int minAddToMakeValid(string S) {
+        int n = S.size(), res = 0;
+        stack<char> s;
+        for(int i = 0; i < n; i++){
+            char c = S[i];
+            if(c == '('){
+                s.push(c);
+            }
+            else{ //c==')'
+                if(s.empty() || s.top() == ')'){
+                    res++;
+                }
+                else{
+                    s.pop();
+                }
+            }
+        }
+        res += s.size();
+        return res;
     }
 };
