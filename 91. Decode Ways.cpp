@@ -1,3 +1,33 @@
+// my, sol2, dfs+memo, O(n), O(n)
+class Solution {
+public:
+    vector<int> memo;
+    int n;
+    int numDecodings(string s) {
+        n = s.size();
+        memo.resize(n, -1);
+        return dfs(s, 0);
+    }
+    
+    
+    int dfs(string& s, int i){
+        if(i == n) return 1;
+        else if(i > n) return 0;
+        
+        if(memo[i] != -1) return memo[i];
+        
+        int res = 0;        
+        if(s[i] != '0'){
+            // one digit
+            res += dfs(s, i+1);
+
+            // two digit
+            if(stoi(s.substr(i, 2)) <= 26) res += dfs(s, i+2);            
+        }
+        return memo[i] = res;
+    }
+};
+
 //!! sol1.1, my dp, O(n), O(1)
 class Solution {
 public:
