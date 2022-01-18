@@ -62,7 +62,7 @@ public:
             if(i == m - n) break;
             
             int pre_d = haystack[i] - 'a', last_d = haystack[i+n] - 'a';
-            hash_hay = ( (hash_hay * 26 % MOD -  pre_d * pow26 + MOD ) % MOD   + last_d ) % MOD;
+            hash_hay = ( (hash_hay * 26 % MOD + (MOD -  pre_d * pow26 % MOD) ) % MOD   + last_d ) % MOD;
             
         }
         return -1;
