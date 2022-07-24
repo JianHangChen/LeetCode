@@ -1,3 +1,56 @@
+// union find, O(m alpha(n)), O(mn)
+class Solution {
+public:
+    int m, n;
+    int res = 0;
+    vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    int numIslands(vector<vector<char>>& grid) {
+        m = grid.size(); n = grid[0].size();        
+        
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == '1'){
+                    int idx = getIndex(i, j);
+                    parent[idx] = idx;
+                    res++;
+                }
+            }
+        }
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == '1'){
+                    for(auto& dir:dirs){
+                        int x = i + dir[0], y = j + dir[1];
+                        if(isValid(x, y, grid)){
+                            uni(getIndex(i, j), getIndex(x, y));
+                        }
+                    }                    
+                }
+            }
+        }
+        return res;
+    }
+    bool isValid(int x, int y, vector<vector<char>>& grid){
+        if(x < 0 || x >= m || y < 0 || y >= n) return false;
+        return grid[x][y] == '1';
+    }
+    unordered_map<int, int> parent;
+    int find(int i){
+        if(parent[i] == i) return i;
+        parent[i] = find(parent[i]);
+        return parent[i];
+    }
+    void uni(int i, int j){
+        int ri = find(i), rj = find(j);
+        if(ri == rj) return;
+        parent[ri] = rj;
+        res--;
+    }
+    int getIndex(int x, int y){
+        return x * n + y;
+    }
+};
+
 // followup:
 // matrix grid is large and sparce
 
